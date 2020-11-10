@@ -1,0 +1,39 @@
+<?php
+namespace App\Repositories\Grade;
+
+use App\Models\Grade;
+use App\Repositories\Grade\GradeRepositoryInterface;
+
+class GradeRepository implements GradeRepositoryInterface {
+
+    public function getAllGrade()
+    {
+        return Grade::all();
+    }
+
+    public function getGradeById($id)
+    {
+        return Grade::find($id);
+    }
+
+    public function createGrade($data)
+    {
+        return Grade::create([
+            'id_indicator' => $data->id_indicator,
+            'id_submission' => $data->id_submission
+        ]);
+    }
+
+    public function updateGrade($data)
+    {
+        return Grade::find($data->id)->update([
+            'id_indicator' => $data->id_indicator,
+            'id_submission' => $data->id_submission
+        ]);
+    }
+
+    public function deleteGradeById($id)
+    {
+        return $grade = Grade::find($id)->delete();
+    }
+}
