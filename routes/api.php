@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ChildController;
+use App\Http\Controllers\KelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,9 @@ Route::get('child', [ChildController::class, 'index']);
 Route::get('child/{id?}', [ChildController::class, 'show']);
 Route::post('child/update', [ChildController::class, 'update']);
 Route::delete('child/{id?}', [ChildController::class, 'destroy']);
+
+Route::post('kelas/store', [KelasController::class, 'store']);
+Route::get('kelas', [KelasController::class, 'index']);
+Route::get('kelas/{id?}', [KelasController::class, 'show']);
+Route::post('kelas/update', [KelasController::class, 'update']);
+Route::delete('kelas/{id?}', [KelasController::class, 'destroy']);
