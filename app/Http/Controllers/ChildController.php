@@ -45,7 +45,7 @@ class ChildController extends Controller
     	if($child) {
     		return response()->json([
     			'success' => true,
-    			'message' => 'Detail Teacher',
+    			'message' => 'Detail Child',
     			'data' => $child
     		], 200);
     	} else {
