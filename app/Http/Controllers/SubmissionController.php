@@ -120,4 +120,20 @@ class SubmissionController extends Controller
 			'data' => $data
 		], 200);
 	}
+
+	public function gradingSubmission(Request $request) {
+		$grade = $this->submissionService->gradingSubmission($request);
+
+		if($grade) {
+			return response()->json([
+				'success' => true,
+				'message' => 'Submission graded',
+			], 200);
+		} else {
+			return response()->json([
+				'success' => true,
+				'message' => 'Submission not graded',
+			], 401);
+		}
+	}
 }

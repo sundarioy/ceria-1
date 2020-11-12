@@ -5,7 +5,7 @@ namespace App\Repositories\Grade;
 interface GradeRepositoryInterface {
     public function getAllGrade();
     public function getGradeById($id);
-    public function createGrade($data);
+    public function createGrade($submission, $indicator);
     public function updateGrade($data);
     public function deleteGradeById($id);
 }

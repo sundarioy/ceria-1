@@ -46,6 +46,7 @@ Route::get('teacher/{nip?}/assignment/{id_assignment?}', [AssignmentController::
 
 Route::post('submission/store', [SubmissionController::class, 'store']);
 Route::get('submission/{id_assignment?}/teacher/{nip?}/collected', [SubmissionController::class, 'getCollectSubmission']);
+Route::post('submission/grade', [SubmissionController::class, 'gradingSubmission']);
 
 Route::post('child/store', [ChildController::class, 'store']);
 Route::get('child', [ChildController::class, 'index']);

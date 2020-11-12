@@ -57,4 +57,11 @@ class SubmissionRepository implements SubmissionRepositoryInterface {
     {
         return Submission::where('id_assignment', $id_assignment)->get();
     }
+
+    public function gradingSubmission($data)
+    {
+        return Submission::find($data->id)->update([
+            'grade' => $data->grade
+        ]);
+    }
 }

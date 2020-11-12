@@ -3,17 +3,27 @@ namespace App\Services;
 
 use App\Repositories\Document\DocumentRepositoryInterface;
 use App\Repositories\Submission\SubmissionRepositoryInterface;
+use App\Repositories\Grade\GradeRepositoryInterface;
+use App\Repositories\Indicator\IndicatorRepositoryInterface;
 use Illuminate\Http\Request;
 
 class SubmissionService {
     
     protected $submissionRepository;
     protected $documentRepository;
+    protected $gradeRepository;
+    protected $indicatorRepository;
 
-    public function __construct(SubmissionRepositoryInterface $submissionRepository, DocumentRepositoryInterface $documentRepository)
-    {
+    public function __construct(
+        SubmissionRepositoryInterface $submissionRepository, 
+        DocumentRepositoryInterface $documentRepository,
+        GradeRepositoryInterface $gradeRepository,
+        IndicatorRepositoryInterface $indicatorRepository
+    ){
         $this->submissionRepository = $submissionRepository;
         $this->documentRepository = $documentRepository;
+        $this->gradeRepository = $gradeRepository;
+        $this->indicatorRepository = $indicatorRepository;
     }
 
     public function getAllSubmissions() {
@@ -55,5 +65,11 @@ class SubmissionService {
 
     public function getSubmissionByAssigmentId($id_assignment) {
         return $this->submissionRepository->getSubmissionByAssigmentId($id_assignment);
+    }
+
+    public function gradingSubmission(Request $request) {
+        $this->submissionRepository->gradingSubmission($request);
+        $indicator = $this->indicatorRepository->createIndicator($request);
+        return $this->gradeRepository->createGrade($request, $indicator);
     }
 }

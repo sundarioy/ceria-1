@@ -16,11 +16,11 @@ class GradeRepository implements GradeRepositoryInterface {
         return Grade::find($id);
     }
 
-    public function createGrade($data)
+    public function createGrade($submission, $indicator)
     {
         return Grade::create([
-            'id_indicator' => $data->id_indicator,
-            'id_submission' => $data->id_submission
+            'id_indicator' => $indicator->id,
+            'id_submission' => $submission->id
         ]);
     }
 
