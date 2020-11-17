@@ -30,12 +30,14 @@ Route::get('parent', [ParentsController::class, 'index']);
 Route::get('parent/{nik?}', [ParentsController::class, 'show']);
 Route::post('parent/update', [ParentsController::class, 'update']);
 Route::delete('parent/{nik?}', [ParentsController::class, 'destroy']);
+Route::post('parent/login', [ParentsController::class, 'login']);
 
 Route::post('teacher/store', [TeacherController::class, 'store']);
 Route::get('teacher', [TeacherController::class, 'index']);
 Route::get('teacher/{nik?}', [TeacherController::class, 'show']);
 Route::post('teacher/update', [TeacherController::class, 'update']);
 Route::delete('teacher/{nik?}', [TeacherController::class, 'destroy']);
+Route::post('teacher/login', [TeacherController::class, 'login']);
 
 Route::post('assignment/store', [AssignmentController::class, 'store']);
 Route::post('assignment/{id?}/update', [AssignmentController::class, 'update']);

@@ -3,6 +3,7 @@ namespace App\Repositories\Teacher;
 
 use App\Models\Teacher;
 use App\Repositories\Teacher\TeacherRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherRepository implements TeacherRepositoryInterface {
     
@@ -21,7 +22,7 @@ class TeacherRepository implements TeacherRepositoryInterface {
         return Teacher::create([
 			'nomor_pegawai' => $data->nomor_pegawai,
 			'username' => $data->username,
-			'password' => $data->password,
+			'password' => Hash::make($data->password),
 			'nama' => $data->nama
 		]);
     }
@@ -31,7 +32,7 @@ class TeacherRepository implements TeacherRepositoryInterface {
         return Teacher::find($data->nomor_pegawai)->update([
 			'nomor_pegawai' => $data->nomor_pegawai,
 			'username' => $data->username,
-			'password' => $data->password,
+			'password' => Hash::make($data->password),
 			'nama' => $data->nama
 		]);
     }
@@ -41,5 +42,10 @@ class TeacherRepository implements TeacherRepositoryInterface {
         $teacher = Teacher::find($id);
         $teacher->delete();
         return $teacher;
+    }
+
+    public function getTeacherByUsername($username)
+    {
+        return Teacher::where('username', $username)->first();
     }
 }

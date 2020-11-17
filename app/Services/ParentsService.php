@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Repositories\Parents\ParentsRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ParentsService {
     
@@ -31,5 +32,21 @@ class ParentsService {
 
     public function deleteParentById($id) {
         return $this->parentsRepository->deleteParentById($id);
+    }
+
+    public function loginParents(Request $request) {
+        $status=array("success" => false, "message" => "");
+        $parent = $this->parentsRepository->getParentByUsername($request->username);
+        if($parent) {
+            if(Hash::check($request->password, $parent->password)) {
+                $status["message"] = "Login Berhasil";
+                $status["success"] = true;
+            } else {
+                $status["message"] = "Password Salah";
+            }
+        } else {
+            $status["message"] = "Username tidak ditemukan";
+        }
+        return $status;
     }
 }

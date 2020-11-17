@@ -3,6 +3,7 @@ namespace App\Repositories\Parents;
 
 use App\Models\Parents;
 use App\Repositories\Parents\ParentsRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
 
 class ParentsRepository implements ParentsRepositoryInterface {
     
@@ -21,7 +22,7 @@ class ParentsRepository implements ParentsRepositoryInterface {
         return Parents::create([
 			'nik' => $data->nik,
 			'username' => $data->username,
-			'password' => $data->password,
+			'password' => Hash::make($data->password),
 			'nama' => $data->nama
 		]);
     }
@@ -31,7 +32,7 @@ class ParentsRepository implements ParentsRepositoryInterface {
         return Parents::find($data->nik)->update([
 			'nik' => $data->nik,
 			'username' => $data->username,
-			'password' => $data->password,
+			'password' => Hash::make($data->password),
 			'nama' => $data->nama
 		]);
     }
@@ -41,5 +42,10 @@ class ParentsRepository implements ParentsRepositoryInterface {
         $parent = Parents::find($id);
         $parent->delete();
         return $parent;
+    }
+
+    public function getParentByUsername($username)
+    {
+        return Parents::where('username', $username)->first();
     }
 }

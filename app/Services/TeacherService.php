@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Repositories\Teacher\TeacherRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherService {
     protected $teacherRepository;
@@ -30,5 +31,21 @@ class TeacherService {
 
     public function deleteTeacherById($id) {
         return $this->teacherRepository->deleteTeacherById($id);
+    }
+
+    public function loginTeacher(Request $request) {
+        $status=array("success" => false, "message" => "");
+        $teacher = $this->teacherRepository->getTeacherByUsername($request->username);
+        if($teacher) {
+            if(Hash::check($request->password, $teacher->password)) {
+                $status["message"] = "Login Berhasil";
+                $status["success"] = true;
+            } else {
+                $status["message"] = "Password Salah";
+            }
+        } else {
+            $status["message"] = "Username tidak ditemukan";
+        }
+        return $status;
     }
 }

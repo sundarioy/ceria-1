@@ -88,5 +88,14 @@ class ParentsController extends Controller
     			'message' => 'Item gagal dihapus',
     		], 401);
     	}
-    }
+	}
+	
+	public function login(Request $request) {
+		$status = $this->parentsService->loginParents($request);
+
+		return response()->json([
+			'success' => $status["success"],
+			'message' => $status["message"],
+		], 200);
+	}
 }
