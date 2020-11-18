@@ -1,0 +1,627 @@
+#sidebar {
+	min-height: 700px;
+	background-color: #DDDDDD;
+
+}
+
+.sidebar-header {
+    padding: 15px;
+}
+
+.sidebar-header span {
+    padding-left: 10px;
+    color: #41348C;
+    font-weight: bold;
+}
+
+/* Shrinking the sidebar from 250px to 80px and center aligining its content*/
+#sidebar .minimize {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+/* Toggling the sidebar header content, hide the big heading [h3] and showing the small heading [strong] and vice versa*/
+#sidebar .sidebar-header strong {
+    display: none;
+}
+#sidebar.minimize .sidebar-header h3 {
+    display: none;
+}
+#sidebar.minimize .sidebar-header strong {
+    display: block;
+}
+
+#sidebar ul {
+    width: 100%;
+}
+
+#sidebar ul li {
+    padding: 5px 5px; 
+}
+
+#sidebar ul li i {
+    min-width: 25px;
+}
+
+#sidebar ul li a {
+    text-align: left;
+    text-decoration: none;
+    color: #555555;
+}
+
+#sidebar .active {
+    background-color: #41348C ;
+    color: #fff !important;
+}
+
+#sidebar.minimize ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+#sidebar.minimize ul li a i {
+    margin-right:  0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+/* Same dropdown links padding*/
+#sidebar.minimize ul ul a {
+    padding: 10px !important;
+}
+
+/* Changing the arrow position to bottom center position, 
+   translateX(50%) works with right: 50% 
+   to accurately  center the arrow */
+   #sidebar.minimize .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+@media (max-width: 768px) {
+    /* 80px and its content aligned to centre. Pushing it off the screen with the
+       negative left margin
+       */
+       #sidebar.minimize {
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+
+
+    /* Reappearing the sidebar on toggle button click */
+    #sidebar {
+        margin-left: 0; 
+    }
+
+
+    /* Toggling the sidebar header content, 
+       hide the big heading [h3] and showing the small heading [strong] and vice versa
+       */
+       #sidebar .sidebar-header strong {
+        display: none;
+    }
+    #sidebar.minimize .sidebar-header h3 {
+        display: none;
+    }
+    #sidebar.minimize .sidebar-header strong {
+        display: block;
+    }
+
+    /* Downsize the navigation links font size */
+    #sidebar.minimize ul li a {
+        padding: 20px 10px;
+        font-size: 0.85em;
+    }
+
+    #sidebar.minimize ul li a i {
+        margin-right:  0;
+        display: block;
+        font-size: 1.8em;
+        margin-bottom: 5px;
+
+    }
+
+    /* Adjust the dropdown links padding*/
+    #sidebar.minimize ul ul a {
+        padding: 10px !important;
+    }
+
+    /* Changing the arrow position to bottom center position, 
+      translateX(50%) works with right: 50% 
+      to accurately  center the arrow */
+      .dropdown-toggle::after {
+        top: auto;
+        bottom: 10px;
+        right: 50%;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+}
+
+.menu-label {
+    padding-left: 0.5em;
+}
+
+.student-image-bg {
+    width: 100px;
+    height: 100px;
+    background-color: #8A8A8A;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.student-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-image: url("../images/garcon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.student-name {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+/*----------------------------------------- HEADER -----------------------------------------*/
+
+#header-wrapper {
+    width: 100%;
+    height: auto;
+    background-color: #fff;    
+}
+
+#header-wrapper ul {
+    display: flex;
+}
+
+#header-wrapper ul li{
+    padding: 10px;
+}
+
+#header-wrapper a{
+    color: #555555;
+    position: relative;
+    text-decoration: none;
+}
+
+#header-wrapper i {
+    min-width: 20px;
+    position: relative;
+}
+
+#header-wrapper #notification {    
+    width: 20px;
+    height: 20px;
+    display: inline-block; 
+    background-color: #D30000;    
+    border-radius: 50%;    
+}
+
+#notification span{
+    font-size: 12px;
+    text-align: center;                        
+    margin-top: 0px;
+    display: block;
+    color: #fff;
+}
+
+/*-------------------------------------- PARENT ASSIGNMENT -------------------------------*/
+
+.assignment-menu {
+    position: relative;
+    display: flex;    
+}
+
+.border-1-555 {    
+    border: 1px solid #555;
+}
+
+.assignment-menu .active{
+    position: relative;    
+    background-color: #41348C ;
+    color: #fff !important;
+}
+
+.assignment-menu li a, .class-menu li a, .assignment-menu li a:hover, #myTab li a{    
+    color: #555555;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.assinmnets-table, .asmt-submission-table{    
+   width: 100%;
+   width: -moz-available;          /* WebKit-based browsers will ignore this. */
+   width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+   width: fill-available;
+}
+
+.assignments-table table , .asmt-submission-table table{
+    width: 100%;
+}
+
+.assinmnets-table th, tbody tr:nth-child(odd) th {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #555;    
+}
+
+.assinmnets-table tbody tr:nth-child(odd), .asmt-submission-table tbody tr:nth-child(odd) {
+  background-color: #E5E5E5;
+}
+
+.assinmnets-table tbody tr:hover{
+  background-color: #41348C;
+  cursor: pointer;
+  color: #fff !important;
+  transition: 0.5s;
+  text-decoration: none;
+}
+
+.assinmnets-table table tr td{
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.asmt-submission-table tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.assignment-late {
+    color: #dc3545;
+}
+
+.assinmnets-table a, .asmt-submission-table a{
+    text-decoration: none;
+    color: #000;
+}
+
+.assinmnets-table a:hover{
+    text-decoration: none;
+    color: #fff;
+}
+
+/*Assignment detail*/
+
+.path {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.amt-deatail-header a,.amt-deatail-header a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+.amt-submission {
+    min-height: 200px;    
+    background-color: #EFEFEF;
+    padding: 20px 50px;
+}
+
+.amt-submission .label {
+    font-size: 13px;
+}
+
+.amt-submission .value {
+    font-size: 15px;
+    padding-bottom: 1em; 
+    padding-top: 5px;   
+}
+
+.amt-submission input[type="submit"] {
+    width: 100%;
+    background-color: #41348C;
+    color: #fff;
+    padding: 5px 0px;
+    border: none;
+}
+
+.amt-detail-title {
+    margin-top: -20px !important;
+}
+
+.amt-detail-content i {
+    font-size: 12px;
+}
+
+.amt-main-file a, .amt-submission a {
+    color: #000;
+    text-decoration: none;
+}
+
+.amt-main-file i {
+    padding: 0px 10px;    
+}
+
+.amt-grade {
+    text-align: right;
+    padding-right: 20px;    
+}
+
+.amt-grade>.grading {
+    font-size: 20px;
+    padding: 10px;
+    background-color: #41348C;
+    color: #fff;
+    font-weight: bold;
+    width: 70px;
+    text-align: center;
+    margin: auto;
+    float: right;
+    margin-top: -10px;
+
+}
+
+.btn-submit {
+    color: #fff;
+    background-color: #41348C;
+    border-color: #41348C;
+}
+
+.table-student-thumbnail {
+    width: 40px;
+    height: 40px;    
+    background-image: url("../images/garcon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 10px;
+}
+
+.table-student-name {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*----------------------------- CLASS -----------------------------*/
+
+.class-box {
+    min-width: 250px;
+    height: 150px;
+    background-color: #fff;
+    background-image: url("../images/419.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #555;
+}
+
+/*---------------------------------- TAECHER ASSIGNMENT ----------------------------*/
+
+.float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#41348C;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+    margin-top:22px;
+}
+
+.datetime input[type="text"]{    
+    display: block;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.date i {
+    font-size: 20px;
+    background-color: #ECECEC;
+    border: 1px solid #ced4da;
+    padding: 0px 5px;
+    padding-top: 5px;
+}
+
+/*------------------------------- LOGIN ----------------------------------*/
+
+#outer-login {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#middle-login {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#login {
+    background-color: #41348C;
+    width: 100%;
+    height: 100%;
+}
+
+#login header {
+    width: 100%;
+    min-height: 80px;    
+    display: flex;
+    padding-top: 20px;
+}
+
+#login header ul {
+    display: flex;
+}
+
+#login header ul li{
+    display: flex;
+    padding: 0px 10px;
+}
+
+#login header ul li .active{
+    background-color: #F0BC07;
+    border-radius: 10px;
+}
+
+#login header ul a {
+    color: #fff;
+}
+
+.login-header-image img{
+    width: 200px;
+    height: auto;
+    margin-top: -10px;
+}
+
+.login-box {
+    min-width: 380px;
+    min-height: 350px;
+    padding: 20px;
+    border: 4px solid #fff;
+    border-radius: 20px; 
+    display: block;
+    margin: auto;
+}
+
+#login-image {
+    margin-top: -100px !important;
+    width: 120px;
+    height: 120px;
+    background-color: #fff;    
+    border-radius: 100%;
+}
+
+#login-form input[type="text"], #login-form input[type="password"]{
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+    padding: 8px 20px;
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    font-size: 14px;
+
+}
+
+#login-form input[type="submit"] {
+    border-radius: 3px;
+    border: none;
+    padding: 8px 20px;
+    background-color: #0F0645;
+    color: #fff;
+}
+
+.login-addition {
+    font-size: 13px;
+    color: #fff;
+    padding: 0 10px;
+    text-align: right;
+}
+
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    transition: opacity .3s ease;
+}
+
+.modal-container {
+    width: 300px;
+    margin: 40px auto 0;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.form-label > .form-control {
+    margin-top: 0.5em;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5em 1em;
+    line-height: 1.5;
+    border: 1px solid #ddd;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+ .modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
