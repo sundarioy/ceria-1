@@ -34,12 +34,15 @@ class TeacherService {
     }
 
     public function loginTeacher(Request $request) {
-        $status=array("success" => false, "message" => "");
+        $status=array("success" => false, "message" => "", "data" => []);
         $teacher = $this->teacherRepository->getTeacherByUsername($request->username);
         if($teacher) {
             if(Hash::check($request->password, $teacher->password)) {
                 $status["message"] = "Login Berhasil";
                 $status["success"] = true;
+                $teacher->role = "teacher";
+                unset($teacher->password);
+                $status["data"] = $teacher;
             } else {
                 $status["message"] = "Password Salah";
             }

@@ -96,6 +96,7 @@ class ParentsController extends Controller
 		return response()->json([
 			'success' => $status["success"],
 			'message' => $status["message"],
+			'data' => $status["data"],
 		], 200);
 	}
 }

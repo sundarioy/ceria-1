@@ -35,12 +35,15 @@ class ParentsService {
     }
 
     public function loginParents(Request $request) {
-        $status=array("success" => false, "message" => "");
+        $status=array("success" => false, "message" => "", "data" => []);
         $parent = $this->parentsRepository->getParentByUsername($request->username);
         if($parent) {
             if(Hash::check($request->password, $parent->password)) {
                 $status["message"] = "Login Berhasil";
                 $status["success"] = true;
+                $parent->role = "parent";
+                unset($parent->password);
+                $status["data"] = $parent;
             } else {
                 $status["message"] = "Password Salah";
             }

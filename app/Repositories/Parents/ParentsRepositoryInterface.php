@@ -8,4 +8,5 @@ interface ParentsRepositoryInterface {
     public function createParent($data);
     public function updateParent($data);
     public function deleteParentById($id);
+    public function getParentByUsername($username);
 }
