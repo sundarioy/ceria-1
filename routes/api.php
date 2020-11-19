@@ -40,6 +40,7 @@ Route::delete('teacher/{nik?}', [TeacherController::class, 'destroy']);
 Route::post('teacher/login', [TeacherController::class, 'login']);
 
 Route::post('assignment/store', [AssignmentController::class, 'store']);
+Route::get('assignment', [AssignmentController::class, 'index']);
 Route::post('assignment/{id?}/update', [AssignmentController::class, 'update']);
 Route::post('assignment/{id?}/delete', [AssignmentController::class, 'safeDelete']);
 Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment', [AssignmentController::class, 'listAssignment']);
