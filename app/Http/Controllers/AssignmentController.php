@@ -115,6 +115,7 @@ class AssignmentController extends Controller
 		$assignments = $this->assignmentService->getAllVisibleAssignment();
 		foreach($assignments as $assignment) {
 			$data[] = array(
+				'id' => $assignment->id,
 				'title' => $assignment->title,
 				'due_date' => $assignment->due_date,
 				'isDue' => Carbon::now() > $assignment->due_date ? true : false,
