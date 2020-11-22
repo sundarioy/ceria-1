@@ -72,4 +72,11 @@ class SubmissionService {
         $indicator = $this->indicatorRepository->createIndicator($request);
         return $this->gradeRepository->createGrade($request, $indicator);
     }
+
+    public function updateGradeSubmission(Request $request, $id_grade) {
+        $this->submissionRepository->gradingSubmission($request);
+        $grade = $this->gradeRepository->getGradeById($id_grade);
+        $data=array("id" => $grade->id, "description" => $request->description );
+        return $this->indicatorRepository->updateIndicator($data);
+    }
 }

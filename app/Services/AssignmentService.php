@@ -49,4 +49,8 @@ class AssignmentService {
     public function getAllVisibleAssignment() {
         return $this->assignmentRepository->getAllVisibleAssignment();
     }
+
+    public function getAssignmentByTeacher($nip) {
+        return $this->assignmentRepository->getAssignmentByTeacher($nip);
+    }
 }

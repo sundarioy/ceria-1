@@ -22,7 +22,7 @@ class GradeService {
     }
 
     public function createGrade(Request $request) {
-        return $this->gradeRepository->createGrade($request);
+        return $this->gradeRepository->createGrade($request, $request);
     }
 
     public function updateGrade(Request $request) {

@@ -27,7 +27,8 @@ class AssignmentRepository implements AssignmentRepositoryInterface {
             'user_update' => $data->user_update,
             'date_update' => $data->date_update,
             'id_teacher' => $data->id_teacher,
-            'isVisible' => $data->is_visible
+            'isVisible' => $data->is_visible,
+            'id_kelas' => $data->id_kelas
         ]);
     }
 
@@ -63,5 +64,10 @@ class AssignmentRepository implements AssignmentRepositoryInterface {
     public function getAllVisibleAssignment()
     {
         return Assignment::where('isVisible', '1')->get();
+    }
+
+    public function getAssignmentByTeacher($nip)
+    {
+        return Assignment::where('id_teacher', $nip)->get();
     }
 }

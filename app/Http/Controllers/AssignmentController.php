@@ -110,16 +110,32 @@ class AssignmentController extends Controller
         }
 	}
 	
-	public function listAssignment($nis, $id_kelas) {
+	public function getListParentAssignment($nis, $id_kelas) {
 		$data = array();
 		$assignments = $this->assignmentService->getAllVisibleAssignment();
+
 		foreach($assignments as $assignment) {
+			$isSubmitted = $this->submissionService->checkSubmissionExists($nis, $id_kelas, $assignment->id);
+			$isLate = false;
+			$collection_date = null;
+			$grade = null;
+
+			if($isSubmitted) {
+				$submission = $this->submissionService->getSubmission($nis, $id_kelas, $assignment->id);
+				$isLate = $assignment->due_date < $submission->date_create ? true : false;
+				$collection_date = $submission->date_create;
+				$grade = $submission->grade;
+			}
+			
 			$data[] = array(
 				'id' => $assignment->id,
 				'title' => $assignment->title,
 				'due_date' => $assignment->due_date,
 				'isDue' => Carbon::now() > $assignment->due_date ? true : false,
-				'isSubmitted' => $this->submissionService->checkSubmissionExists($nis, $id_kelas, $assignment->id)
+				'isSubmitted' => $isSubmitted,
+				'collection_date' => $collection_date,
+				'isLate' => $isLate,
+				'grade' => $grade
 			);
 		}
 
@@ -132,6 +148,7 @@ class AssignmentController extends Controller
 	public function getParentDetailAssignment($nis, $id_kelas, $id_assignment) {
 		$assignment = $this->assignmentService->getAssignmentById($id_assignment);
 		$submission = $this->submissionService->getSubmission($nis, $id_kelas, $id_assignment);
+
 		if($submission === null) {
 			$student_file = null;
 		} else {
@@ -178,5 +195,29 @@ class AssignmentController extends Controller
 			'success' => true,
 			'data' => $data
 		], 200);
+	}
+
+	public function getTeacherListAssignment($nip) {
+		$data = array();
+		$assignments = $this->assignmentService->getAssignmentByTeacher($nip);
+
+		foreach($assignments as $assignment) {
+			$isGraded = true;
+			$submissions = $this->submissionService->getSubmissionByAssigmentId($assignment->id);
+			foreach($submissions as $submission) {
+				if($submission->grade === null) {
+					$isGraded = false;
+					break;
+				}
+			}
+			$data[] = array(
+				'id' => $assignment->id,
+				'title' => $assignment->title,
+				'due_date' => $assignment->due_date,
+				'isDue' => Carbon::now() > $assignment->due_date ? true : false,
+				'class' => $assignment->id_kelas,
+				'isGrade' => $isGraded
+			);
+		}
 	}
 }

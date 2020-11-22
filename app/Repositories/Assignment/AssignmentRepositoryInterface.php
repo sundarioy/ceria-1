@@ -10,4 +10,5 @@ interface AssignmentRepositoryInterface {
     public function deleteAssignmentById($id);
     public function safeDeleteAssignmentById($id);
     public function getAllVisibleAssignment();
+    public function getAssignmentByTeacher($nip);
 }

@@ -136,4 +136,22 @@ class SubmissionController extends Controller
 			], 401);
 		}
 	}
+
+	public function updateGradeSubmission($id_grade, Request $request) {
+		$grade = $this->submissionService->updateGradeSubmission($request, $id_grade);
+
+		if($grade) {
+			return response()->json([
+				'success' => true,
+				'message' => 'Submission grade updated',
+			], 200);
+		} else {
+			return response()->json([
+				'success' => true,
+				'message' => 'Submission grade not updated',
+			], 401);
+		}
+	}
+
+	
 }

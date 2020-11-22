@@ -43,13 +43,15 @@ Route::post('assignment/store', [AssignmentController::class, 'store']);
 Route::get('assignment', [AssignmentController::class, 'index']);
 Route::post('assignment/{id?}/update', [AssignmentController::class, 'update']);
 Route::post('assignment/{id?}/delete', [AssignmentController::class, 'safeDelete']);
-Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment', [AssignmentController::class, 'listAssignment']);
+Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment', [AssignmentController::class, 'getListParentAssignment']);
 Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment/{id_assignment?}', [AssignmentController::class, 'getParentDetailAssignment']);
 Route::get('teacher/{nip?}/assignment/{id_assignment?}', [AssignmentController::class, 'getTeacherDetailAssignment']);
+Route::get('teacher/{nip?}/assignment', [AssignmentController::class, 'getTeacherListAssignment']);
 
 Route::post('submission/store', [SubmissionController::class, 'store']);
 Route::get('submission/{id_assignment?}/teacher/{nip?}/collected', [SubmissionController::class, 'getCollectSubmission']);
 Route::post('submission/grade', [SubmissionController::class, 'gradingSubmission']);
+Route::post('submission/grade/update', [SubmissionController::class, 'updateGradeSubmission']);
 
 Route::post('child/store', [ChildController::class, 'store']);
 Route::get('child', [ChildController::class, 'index']);
