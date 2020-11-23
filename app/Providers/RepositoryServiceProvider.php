@@ -77,6 +77,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Submission\SubmissionRepositoryInterface',
             'App\Repositories\Submission\SubmissionRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Discussion\DiscussionRepositoryInterface',
+            'App\Repositories\Discussion\DiscussionRepository'
+        );
     }
 
     /**

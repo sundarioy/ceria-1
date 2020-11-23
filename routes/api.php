@@ -8,6 +8,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\DiscussionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +65,8 @@ Route::get('kelas', [KelasController::class, 'index']);
 Route::get('kelas/{id?}', [KelasController::class, 'show']);
 Route::post('kelas/update', [KelasController::class, 'update']);
 Route::delete('kelas/{id?}', [KelasController::class, 'destroy']);
+
+Route::post('discussion/store', [DiscussionController::class, 'store']);
+Route::get('discussion/assignment/{id_assignment}/class/{id_class}', [DiscussionController::class, 'getDiscussion']);
+Route::post('discussion/{id}/update', [DiscussionController::class, 'update']);
+Route::delete('discussion/{id?}', [DiscussionController::class, 'destroy']);
