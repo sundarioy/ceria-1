@@ -10,11 +10,11 @@
 		</div>
 		<div class="row mt-1">
 			<div class="student-image-bg">
-				<div class="student-image"></div>			
+				<div class="teacher-image"></div>			
 			</div>			
 		</div>
 		<div class="row">
-			<div class="student-name">{{ student.nama }} </div>
+			<div class="student-name">{{teacher.nama}}</div>
 		</div>
 		<div class="row">
 			<ul class="list-unstyled components">
@@ -26,9 +26,9 @@
 						</a>
 					</router-link>
 				</li>
-				<li class="nav-item " v-bind:class = "(route == 'tugas-open')?'active':''">
-					<router-link :to="{ name: 'tugas-open' }">
-						<a href="#" class="nav-link" v-bind:class = "(route == 'tugas-open')?'active':''" v-on:click="setRoute('tugas-open',$event)">
+				<li class="nav-item " v-bind:class = "(route == 'tugas-ungraded')?'active':''">
+					<router-link :to="{ name: 'tugas-ungraded' }">
+						<a href="#" class="nav-link" v-bind:class = "(route == 'tugas-ungraded')?'active':''" v-on:click="setRoute('tugas-ungraded',$event)">
 							<i class="fas fa-ballot-check"></i>
 							Tugas
 						</a>
@@ -99,21 +99,20 @@ $(document).ready(function () {
 export default {
 	data() {
 		return {
-			student: [],
-			route:'tugas-open',
+			teacher: [],
+			route:'tugas-ungraded',
 			role:'',
-			username:'',
+			usernam: '',
 		}
 	},
 	created () {
 		this.role = sessionStorage.getItem('role');
 		this.username = sessionStorage.getItem('username');
 
-		let uri = 'https://ceriakan.id/api/child/'+this.username;
+		let uri = 'https://ceriakan.id/api/teacher/'+this.username;
 		axios.get(uri).then(response => {
-			this.student = response.data['data'];  
+			this.teacher = response.data['data'];
 		});
-		
 
 	}, methods: {
 		setRoute(val, event) {

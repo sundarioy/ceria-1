@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{any}', function ($any) {
 
-	if ($any == "index") { 
+	if ($any == "home") { 
 		return view('login');
-	}
-	else {
+	} elseif ($any == "guru") {
+		return view('loginteacher');
+	} else {
 		return view('page');	
 	}
 	

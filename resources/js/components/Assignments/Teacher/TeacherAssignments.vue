@@ -44,24 +44,7 @@
               <td>{{ asmts.duedate }} {{ asmts.duetime }} WIB</td>
               <td>Selesai</td>
             </tr>
-            <!-- <tr>
-              <td>2.</td>
-              <td>Mewarnai Gambar Ilustrasi</td>
-              <td>Prakarya</td>
-              <td>Kelinci</td>
-              <td>11 Januari 2020 15:00 WIB</td>
-              <td>Pengumpulan</td>
-            </tr>
-            <tr>
-              <td>3.</td>
-              <td>Membuat video cerita</td>
-              <td>Bahasa Indonesia</td>
-              <td>Kelinci</td>
-              <td>12 Januari 2020 17:00 WIB </td>             
-              <td>Pengumpulan</td>
-            </tr>  -->
-          </tbody>
-          
+          </tbody>          
         </table>
       </div>
     </div>

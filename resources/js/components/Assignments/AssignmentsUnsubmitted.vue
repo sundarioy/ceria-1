@@ -32,10 +32,10 @@
             </tr>
           </thead>
           <tbody class="">
-            <tr class="pt-1" v-for="(asmts, index) in asmts" :key="asmts.title">
+            <tr class="pt-1" v-for="(asmts, index) in asmts" :key="asmts.id" v-if="!asmts.isSubmitted">
               <td class="">{{ index+1 }}</td>
               <td class="">
-                <router-link :to="{name: 'tugas-detail', params: { id: asmts.title }}">
+                <router-link :to="{name: 'tugas-detail', params: { id: asmts.id }}">
                   {{ asmts.title}}
                 </router-link>
               </td>
@@ -54,18 +54,39 @@
 export default {
   data() {
     return {
-      asmts: []
+      asmts: [],
+      student: [],
+      username:'',
+      id_kelas:'',
+
     }
   },
   created() {
-    // let uri = 'http://localhost:8000/api/asmt';
-    let uri = 'https://ceriakan.id/api/nis/10001/kelas/1/assignment';
-    axios.get(uri).then(response => {
-      this.asmts = response.data['data'];   
+
+    this.username = sessionStorage.getItem('username');
+
+    let uri2 = 'https://ceriakan.id/api/child/'+this.username;
+    axios.get(uri2).then(response => {
+      this.student = response.data['data'];  
     });
+
+    // var json = JSON.parse(this.student);
+
+    // alert(json.data.id_kelas); //88 8nd Street
+    // alert(json["data"].nama); //New York
+
+    let uri = 'https://ceriakan.id/api/nis/'+this.username+'/kelas/'+this.student['nama']+'/assignment';
+    //let uri = 'https://ceriakan.id/api/nis/username/kelas/1/assignment';
+    axios.get(uri).then(response => {
+      this.asmts = response.data['data'];  
+    }); 
+
+
   },
   methods: {
 
+  }, 
+  computed : {
   }
 }
 </script>

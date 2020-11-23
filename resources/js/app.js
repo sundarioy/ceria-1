@@ -72,9 +72,11 @@ Vue.use(VueSweetalert2);
 Vue.component('example', require('./components/ExampleComponent.vue').default);
 Vue.component('header-dash', require('./components/HeaderDashboard.vue').default);
 Vue.component('sidebar', require('./components/SideBar.vue').default);
+Vue.component('sidebar-teacher', require('./components/SideBarTeacher.vue').default);
 Vue.component('parent-assignment', require('./components/ParentAssignments.vue').default);
 Vue.component('parent-class', require('./components/Classes/ParentClasses.vue').default);
 Vue.component('assignment-detail', require('./components/Assignments/AssignmentDetail.vue').default);
+Vue.component('t-asmtForum-pane', require('./components/Assignments/ForumPane.vue').default);
 
 // TEACHER ASSIGNMENT DETAIL
 Vue.component('t-asmtDetail-pane', require('./components/Assignments/Teacher/TAsmtDetailPane.vue').default);

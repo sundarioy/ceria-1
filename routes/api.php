@@ -55,4 +55,5 @@ Route::get('/asmt/asmtStudentSubms/{id?}', 'AssignmentController@asmtStudentSubm
 
 //ASSIGNMENTS AND SUBMISSIONS
 Route::get('/asmt/asmtSubmission/{id?}', 'AssignmentController@asmtSubmission');
+Route::post('/asmt/gradeSubmit/{id?}', 'AssignmentController@gradeSubmit');
 // Route::post('asmt/asmtSubmission','AssignmentsController@asmtSubmit');

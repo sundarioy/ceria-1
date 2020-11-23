@@ -30,13 +30,13 @@
               </div>
             </div>
             
-            <div class="form-group mt-4">
+            <!-- <div class="form-group mt-4">
               <label for="inputAddress">Kelas</label>
               <select class="custom-select" v-model="selected" v-on:change="classChange">                
                 <option v-bind:value="{ name: 'Kelinci'}" value="2">Kelinci</option>
                 <option v-bind:value="{ name: 'Merak'}" value="3">Merak</option>
               </select>
-            </div>
+            </div> -->
             <div class="form-group mt-4">
               <label for="inputAddress">Lampiran</label>
               <div class="custom-file">
@@ -112,21 +112,27 @@ export default {
       {name: 'Kelinci'},
       {name: 'Merak'},
       ],
-      teacher: 1, 
+      teacher: '', 
       file: null, 
       disabledDates: {
         to: new Date(Date.now() - 8640000)
       }
     } 
   },
+  created() {
+    this.teacher = sessionStorage.getItem('username');
+    console.log(this.teacher);
+  },
   methods: {
     setDueDate(val) {
       // console.log(val.getFullYear()+'-'+val.getMonth()+'-'+val.getDate());
-      this.duedate = val.getFullYear()+'-'+val.getMonth()+'-'+val.getDate();
+      this.duedate = val.getFullYear()+':'+val.getMonth()+':'+val.getDate();
     },
     changeTimeHandler(eventData) {
-      this.duetime = eventData.data.HH+":"+eventData.data.mm;
-      console.log(eventData.data.HH+":"+eventData.data.mm);
+      this.duetime = eventData.data.HH+":"+eventData.data.mm+":00";
+      // console.log(eventData.data.HH+":"+eventData.data.mm+":00");
+      // console.log(this.duedate+' '+this.duetime);
+
     },
     classChange(dataClass) {
       this.class = this.selected.name;
@@ -144,14 +150,12 @@ export default {
           headers: { 'content-type': 'multipart/form-data','X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, }
         }
         let formData = new FormData();
-        formData.append('file', this.file);
+        formData.append('lampiran', this.file);
         formData.append('title', this.form.title);
         formData.append('description', this.form.description);
-        formData.append('duedate', this.duedate);
-        formData.append('duetime', this.duetime);
-        formData.append('teacher', this.teacher);
-        formData.append('duetime', this.duetime);
-        formData.append('class', this.class);
+        formData.append('due_date', this.duedate+' '+this.duetime);        
+        formData.append('id_teacher', this.teacher);        
+        formData.append('isVisible', 1);
 
         this.$swal.fire({
           title: 'Success',
@@ -165,10 +169,11 @@ export default {
         //   this.$router.push({name: 'tugas-create'});          
         // });
 
-        axios.post('http://localhost:8000/api/asmt/asmtCreate', formData, config)
+        // axios.post('http://localhost:8000/api/asmt/asmtCreate', formData, config)
+        axios.post('https://ceriakan.id/api/assignment/store', formData, config)
         .then(function (response) {
           currentObj.success = response.data.success;
-          this.$router.push({name: 'tugas-create'});
+          // this.$router.push({name: 'tugas-create'});          
         })
         .catch(function (error) {
           currentObj.output = error;
@@ -177,6 +182,7 @@ export default {
         return true;
       }      
       e.preventDefault();
+      this.$router.go(0);
     }
   }
 }

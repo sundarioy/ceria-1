@@ -14,17 +14,17 @@
 				</div>
 			</div>
 			<!-- <div v-if="subms === null" class="amt-submission col-md-3 pl-4"> -->
-        <div class="amt-submission col-md-3 pl-4">
-				<div class="label">Batas pengumpulan</div>
-				<div class="value">{{ asmts.duedate }} pukul {{ asmts.duetime }} WIB</div>
-				<div class="label">Waktu Tersisa</div>
-				<div class="value time-left-info">{{ asmts.duedate | moment("from") }} </div>
-				<form @submit="formSubmit" enctype="multipart/form-data">
-					<div class="custom-file">
-						<input type="file" class="custom-file-input" id="validatedCustomFile" required v-on:change="onFileChange">
-						<label class="custom-file-label" for="validatedCustomFile" id="CustomFile">Pilih file...</label>
-						<div class="invalid-feedback">Example invalid custom file feedback</div>
-					</div>          
+        <div class="amt-submission col-md-3 pl-4" v-if="">
+          <div class="label">Batas pengumpulan</div>
+          <div class="value">{{ asmts.duedate }} pukul {{ asmts.duetime }} WIB</div>
+          <div class="label">Waktu Tersisa</div>
+          <div class="value time-left-info">{{ asmts.duedate | moment("from") }} </div>
+          <form @submit="formSubmit" enctype="multipart/form-data">
+           <div class="custom-file">
+            <input type="file" class="custom-file-input" id="validatedCustomFile" required v-on:change="onFileChange">
+            <label class="custom-file-label" for="validatedCustomFile" id="CustomFile">Pilih file...</label>
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+          </div>          
           <input type="submit" name="" value="Kumpulkan">
         </form>        
       </div>  
@@ -60,12 +60,20 @@ export default {
       description: '',
       student_id: '',
       asmt_id: '',
+      username:'',
+      student:[],
     }
   },
   created() {
+    this.username = sessionStorage.getItem('username');
+
+    let uri2 = 'https://ceriakan.id/api/child/'+this.username;
+    axios.get(uri2).then((response) => {
+      this.student = response.data;        
+    }); 
 
     // let uri = "http://localhost:8000/api/asmt/asmtShow/"+this.$route.params.id;
-    let uri = "https://ceriakan.id/api/nis/10001/kelas/1/assignment/1";
+    let uri = "https://ceriakan.id/api/nis/"+this.username+"/kelas/"+this.student.id_kelas+"/assignment/"+this.$route.params.id;
     axios.get(uri).then((response) => {
       this.asmts = response.data;        
     });

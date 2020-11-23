@@ -27,13 +27,24 @@
 						<tr>						
 							<th class="">No.</th>
 							<th class="">Judul</th>
-							<th class="">Pelajaran</th>
+							<!-- <th class="">Pelajaran</th> -->
 							<th class="">Tanggal Pengumpulan</th>
 							<th class="">Nilai</th>
-						</tr>										
+						</tr>
 					</thead>
 					<tbody>
-						<tr class="pt-1">
+						<tr class="pt-1" v-for="(asmts, index) in asmts" :key="asmts.id" v-if="asmts.isSubmitted">
+							<td class="">{{ index+1 }}</td>
+							<td class="">
+								<router-link :to="{name: 'tugas-detail', params: { id: asmts.id }}">
+									{{ asmts.title}}
+								</router-link>
+							</td>
+							<!-- <td class="">Matematika</td> -->
+							<td class="">{{ asmts.due_date | moment("DD MMMM YYYY") }} pukul {{ asmts.due_date | moment("HH : mm") }} WIB</td>  
+							<td>90</td>
+						</tr>
+						<!-- <tr class="pt-1">
 							<td>1.</td>
 							<td>
 								<router-link to="/tugas-closed-detail">Penjumlahan Bilangan</router-link>
@@ -55,10 +66,28 @@
 							<td>Bahasa Indonesia</td>
 							<td>12 Januari 2020 17:00 WIB </td>
 							<td></td>
-						</tr>	
+						</tr>	 -->
 					</tbody>					
 				</table>
 			</div>
 		</div>
 	</div>
 </template>
+
+<script>
+
+export default {
+	data() {
+		return {
+			asmts: [],
+		}
+	},
+	created() {
+    // let uri = 'http://localhost:8000/api/asmt';
+    let uri = 'https://ceriakan.id/api/nis/10001/kelas/1/assignment';
+    axios.get(uri).then(response => {
+    	this.asmts = response.data['data'];  
+    });
+  },
+}
+</script>

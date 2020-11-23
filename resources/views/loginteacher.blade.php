@@ -63,14 +63,14 @@
 					<div class="login-box">		
 						<div class="row">
 							<div id="login-image" class="m-auto">
-								<div class="student-image"></div>
+								<div class="teacher-image"></div>
 							</div>
 						</div>					
 						<div class="row">
 							<div id="login-form" class="m-auto pt-5">
 								<!-- <form method="POST" action="https://ceriakan.id/api/parent/login">  -->
 									<!-- onsubmit="send(event,this)" -->
-									<form action="https://ceriakan.id/api/parent/login" id="form-login">
+									<form action="https://ceriakan.id/api/teacher/login" id="form-login">
 										<div class="row pt-3">
 											<input type="text" name="username" id="username" placeholder="&#xf007; &emsp;&emsp; Username" >
 										</div>
@@ -80,15 +80,15 @@
 										<div class="row pt-3">
 											<input type="submit" name="submit" value="Masuk" class="btn-block">
 										</div>
-										<div class="row pt-4">
-											<div class="float-left float-sm-left" style="min-width: 150px;">
-												<input type="hidden" name="">
-												<label class="login-addition"></label>
+										<!-- <div class="row pt-4">
+											<div class="float-left float-sm-left">
+												<input type="checkbox" name="">
+												<label class="login-addition">Ingat saya</label>
 											</div>
-											<div class="float-right float-sm-right login-footer">
-												<a href="/guru" class="login-addition"></a>
+											<div class="float-right float-sm-right pl-4">
+												<a href="" class="login-addition">Lupa password?</a>
 											</div>
-										</div>
+										</div> -->
 									</form>
 								</div>
 							</div>
@@ -158,7 +158,7 @@
 
 					//document.cookie = nama + "=" + (nama || "") + expires + "; path=/";
 					//document.cookie = "nama="+nama;
-					window.location.replace("/tugas-open");
+					window.location.replace("/tugas-ungraded");
 				}
 
 			} catch (error) {

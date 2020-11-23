@@ -27,7 +27,7 @@
 						<td>9 Januari 2020 10:24</td>
 						<td>90</td>
 						<td>
-							<a href="#" class="nav-link" data-toggle="modal" data-target="#myModal">
+							<a href="#" class="nav-link" data-toggle="modal" data-target="#myModal" v-on:click="getId(subms.id_student, subms.nama, subms.id_assignment)">
 								<i class="fas fa-pencil"></i>								
 							</a>
 						</td>
@@ -40,18 +40,21 @@
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<!-- <h4 class="modal-title">Modal Header</h4> -->
+						<h4 class="modal-title">Penilaian {{ namaStudent }}</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>						
 					</div>
 					<div class="modal-body">
-						<form @submit.prevent="createAssignment">
+						<form @submit.prevent="setGrade">
 							<div class="form-group">
 								<label for="inputAddress">Nilai</label>
-								<input type="number" class="form-control">
+								<select class="custom-select" v-model="selected" v-on:change="gradeChange">
+									<option v-bind:value="{ name: 'BSH'}">BSH</option>
+									<option v-bind:value="{ name: 'MB'}">MB</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="inputAddress">Komentar</label>
-								<textarea class="form-control"> </textarea>
+								<textarea class="form-control" v-model="form.comments"> </textarea>
 							</div>
 							<button type="submit" class="btn btn-primary">Submit Nilai</button>
 						</form>
@@ -71,7 +74,15 @@
 export default {
 	data () {
 		return {
-			subms:[],			
+			subms:[],
+			idStudent : '',
+			namaStudent : '',
+			idAssignment : '',
+			products: [
+      {name: 'BSH'},
+      {name: 'MB'},
+      ],
+      grade: null,
 		}
 	}, 
 	created() {
@@ -81,22 +92,44 @@ export default {
     	this.subms = response.data;        
     });
   },  
+  methods : {
+  	getId(student, nama, assignment) {
+  		this.idStudent = student;
+  		this.namaStudent = nama;
+  		this.idAssignment = assignment;
+  	},
+  	classChange(data) {
+      this.grade = this.selected.name;
+      // console.log(this.selected.name);
+    },
+  	setGrade() {
+  		if (this.$data.form.grade != null ) {
+  						
+  			let formData = new FormData();
+  			formData.append('grade', this.class);  			
+  			formData.append('comments', this.form.comments);
+
+  			this.$swal.fire({
+  				title: 'Success',
+  				text: "Nilai sudah disubmit",
+  				icon: 'success',
+  				timer: 1000
+  			})
+        
+        axios.post('http://localhost:8000/api/asmt/gradeSubmit/'+subms.id, formData, config)
+        .then(function (response) {
+        	currentObj.success = response.data.success;
+        	this.$router.push({name: 'tugas-create'});
+        })
+        .catch(function (error) {
+        	currentObj.output = error;
+        });    
+
+        return true;
+      }      
+      e.preventDefault();
+    }
+  },
 }
-
-
-const Modal = {
-	template : `
-	<div class="modal" :class="{ 'is-active': active }">
-	<div class="modal-background"></div>
-	<div class="modal-content">
-	<div class="box">
-	<div class="content">
-	<h1 class="title" v-text="modal.name"></h1>
-	</div>
-	</div>
-	</div>
-	<button @click.prevent="active = false" class="modal-close is-large" aria-label="close"></button>
-	</div>`
-};
 
 </script>

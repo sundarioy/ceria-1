@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Assignments;
 use App\Models\Submissions;
 use App\Http\Controllers\Controller;
@@ -119,10 +118,8 @@ class AssignmentController extends Controller
 			'path' => $path.'/'.$fileName,
 		]);
 
-		return response()->json(['success'=>'You have successfully upload file.']);
-		
+		return response()->json(['success'=>'You have successfully upload file.']);		
 	}
-
 
 	public function asmtSubmission($id) {
 		$subms = DB::table('submissions')
@@ -132,7 +129,15 @@ class AssignmentController extends Controller
 		->get();	
 
 		return response()->json($subms);
-
 	}
 
+	public function gradeSubmit(Request $request) {
+
+		$request['data'] = json_decode($request['data']);
+		$grade = DB::table('submissions')
+		->updateOrInsert(			
+			['grade' => $request->{'asmt_id'}, 'id' => $request->{'id'}], 
+			['comments' => $request->{'comment'}], 
+		);
+	}
 }
