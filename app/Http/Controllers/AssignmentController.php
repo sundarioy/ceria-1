@@ -210,6 +210,7 @@ class AssignmentController extends Controller
 					break;
 				}
 			}
+			
 			$data[] = array(
 				'id' => $assignment->id,
 				'title' => $assignment->title,
@@ -219,5 +220,10 @@ class AssignmentController extends Controller
 				'isGrade' => $isGraded
 			);
 		}
+
+		return response()->json([
+			'success' => true,
+			'data' => $data
+		], 200);
 	}
 }
