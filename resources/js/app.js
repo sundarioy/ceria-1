@@ -118,7 +118,7 @@ Vue.use(VueMoment, {
 },
 {
   name: 'tugas-detail',
-  path: '/tugas-detail/:id',
+  path: '/tugas-detail/:nis/:class/:id',
   component: AssignmentDetail
 },
 {

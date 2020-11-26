@@ -61,13 +61,16 @@
 export default {
   data() {
     return {
-      asmts: []
+      asmts: [],
+      username: '',
     }
   },
   created() {
-    let uri = 'http://localhost:8000/api/asmt';
+    this.username = sessionStorage.getItem('username');
+    // let uri = 'http://localhost:8000/api/asmt';
+    let uri = 'https://ceriakan.id/api/teacher/'+this.username+'/assignment';
     axios.get(uri).then(response => {
-      this.asmts = response.data;
+      this.asmts = response.data['data'];
     });
   },
   methods: {    

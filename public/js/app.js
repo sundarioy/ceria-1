@@ -2111,8 +2111,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2133,7 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
     // alert(json.data.id_kelas); //88 8nd Street
     // alert(json["data"].nama); //New York
 
-    var uri = 'https://ceriakan.id/api/nis/' + this.username + '/kelas/' + this.student['nama'] + '/assignment'; //let uri = 'https://ceriakan.id/api/nis/username/kelas/1/assignment';
+    var uri = 'https://ceriakan.id/api/nis/' + this.username + '/kelas/' + this.student['id_kelas'] + '/assignment'; //let uri = 'https://ceriakan.id/api/nis/username/kelas/1/assignment';
 
     axios.get(uri).then(function (response) {
       _this.asmts = response.data['data'];
@@ -2215,21 +2213,23 @@ $(document).ready(function () {
       student_id: '',
       asmt_id: '',
       username: '',
-      student: []
+      student: [],
+      deskripsi: ''
     };
   },
   created: function created() {
     var _this = this;
 
     this.username = sessionStorage.getItem('username');
+    this.deskripsi = this.username;
     var uri2 = 'https://ceriakan.id/api/child/' + this.username;
     axios.get(uri2).then(function (response) {
       _this.student = response.data;
     }); // let uri = "http://localhost:8000/api/asmt/asmtShow/"+this.$route.params.id;
 
-    var uri = "https://ceriakan.id/api/nis/" + this.username + "/kelas/" + this.student.id_kelas + "/assignment/" + this.$route.params.id;
+    var uri = "https://ceriakan.id/api/nis/" + this.$route.params.nis + "/kelas/" + this.$route.params["class"] + "/assignment/" + this.$route.params.id;
     axios.get(uri).then(function (response) {
-      _this.asmts = response.data;
+      _this.asmts = response.data['data'];
     }); // let uri2 = "http://localhost:8000/api/asmt/asmtStudentSubms/"+this.$route.params.id;
     // axios.get(uri2).then((response) => {
     //   this.subms = response.data;        
@@ -2241,6 +2241,7 @@ $(document).ready(function () {
       this.file = e.target.files[0];
       this.asmt_id = this.$route.params.id;
       this.student_id = 1;
+      $(this).next('.custom-file-label').html(e.target.files[0].name);
     },
     formSubmit: function formSubmit(e) {
       e.preventDefault();
@@ -2253,15 +2254,20 @@ $(document).ready(function () {
       };
       var formData = new FormData();
       formData.append('file', this.file);
-      formData.append('asmt_id', this.asmt_id);
-      formData.append('student_id', this.student_id);
+      formData.append('nis', this.username);
+      formData.append('id_assignment', this.$route.params.id);
+      formData.append('id_kelas', this.$route.params["class"]);
+      formData.append('title', this.asmts.title);
+      formData.append('description', this.deskripsi);
+      formData.append('user_update', this.username);
       this.$swal.fire({
         title: 'Success',
         text: "Tugas berhasil dikumpulkan!",
         icon: 'success',
         timer: 3000
       });
-      axios.post('http://localhost:8000/api/asmt/asmtSubmit', formData, config).then(function (response) {
+      axios.post('https://ceriakan.id/api/submission/store', formData, config) // axios.post('http://localhost:8000/api/asmt/asmtSubmit', formData, config)
+      .then(function (response) {
         currentObj.success = response.data.success;
       })["catch"](function (error) {
         currentObj.output = error;
@@ -2818,15 +2824,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      asmts: []
+      asmts: [],
+      username: ''
     };
   },
   created: function created() {
     var _this = this;
 
-    var uri = 'http://localhost:8000/api/asmt';
+    this.username = sessionStorage.getItem('username'); // let uri = 'http://localhost:8000/api/asmt';
+
+    var uri = 'https://ceriakan.id/api/teacher/' + this.username + '/assignment';
     axios.get(uri).then(function (response) {
-      _this.asmts = response.data;
+      _this.asmts = response.data['data'];
     });
   },
   methods: {}
@@ -72384,7 +72393,11 @@ var render = function() {
                             attrs: {
                               to: {
                                 name: "tugas-detail",
-                                params: { id: asmts.id }
+                                params: {
+                                  nis: _vm.username,
+                                  class: _vm.student.id_kelas,
+                                  id: asmts.id
+                                }
                               }
                             }
                           },
@@ -72392,7 +72405,7 @@ var render = function() {
                             _vm._v(
                               "\n                " +
                                 _vm._s(asmts.title) +
-                                "\n              "
+                                " \n              "
                             )
                           ]
                         )
@@ -72406,7 +72419,7 @@ var render = function() {
                           _vm._f("moment")(asmts.due_date, "DD MMMM YYYY")
                         ) +
                           " pukul " +
-                          _vm._s(_vm._f("moment")(asmts.due_date, "HH : mm")) +
+                          _vm._s(_vm._f("moment")(asmts.due_date, "HH:mm")) +
                           " WIB"
                       )
                     ])
@@ -72528,14 +72541,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "amt-main col-md-9" }, [
+      _c("div", { staticClass: "amt-main col-md-8" }, [
         _c("h4", [_vm._v(_vm._s(_vm.asmts.title))]),
         _vm._v(" "),
         _c("i", [
           _vm._v(
-            "Dipost oleh " +
-              _vm._s(_vm.asmts.teacher) +
-              " pada 8 Januari 2020 pukul 08:00 WIB"
+            "Tugas ditambahkan pada " +
+              _vm._s(_vm._f("moment")(_vm.asmts.date_created, "DD MMMM YYYY")) +
+              " pukul " +
+              _vm._s(_vm._f("moment")(_vm.asmts.date_created, "HH:mm")) +
+              " WIB"
           )
         ]),
         _vm._v(" "),
@@ -72543,65 +72558,104 @@ var render = function() {
           _c("p", [_vm._v(_vm._s(_vm.asmts.description))])
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _vm.asmts.teacher_file != 0
+          ? _c("div", { staticClass: "amt-main-file" }, [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      "https://ceriakan.id/" +
+                      _vm.asmts.teacher_file[0].location +
+                      "/" +
+                      _vm.asmts.teacher_file[0].title
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-browser" }),
+                  _vm._v(
+                    _vm._s(_vm.asmts.teacher_file[0].title) + "\n\t\t\t\t\t"
+                  )
+                ]
+              )
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "amt-submission col-md-3 pl-4" }, [
-        _c("div", { staticClass: "label" }, [_vm._v("Batas pengumpulan")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "value" }, [
-          _vm._v(
-            _vm._s(_vm.asmts.duedate) +
-              " pukul " +
-              _vm._s(_vm.asmts.duetime) +
-              " WIB"
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "label" }, [_vm._v("Waktu Tersisa")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "value time-left-info" }, [
-          _vm._v(_vm._s(_vm._f("moment")(_vm.asmts.duedate, "from")) + " ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            attrs: { enctype: "multipart/form-data" },
-            on: { submit: _vm.formSubmit }
-          },
-          [
-            _c("div", { staticClass: "custom-file" }, [
-              _c("input", {
-                staticClass: "custom-file-input",
-                attrs: {
-                  type: "file",
-                  id: "validatedCustomFile",
-                  required: ""
-                },
-                on: { change: _vm.onFileChange }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-file-label",
-                  attrs: { for: "validatedCustomFile", id: "CustomFile" }
-                },
-                [_vm._v("Pilih file...")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "invalid-feedback" }, [
-                _vm._v("Example invalid custom file feedback")
-              ])
+      !_vm.asmts.isSumitted
+        ? _c("div", { staticClass: "amt-submission col-md-4 pl-4" }, [
+            _c("div", { staticClass: "label" }, [_vm._v("Batas pengumpulan")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "value" }, [
+              _vm._v(
+                _vm._s(_vm._f("moment")(_vm.asmts.due_date, "DD MMMM YYYY")) +
+                  " pukul " +
+                  _vm._s(_vm._f("moment")(_vm.asmts.due_date, "HH:mm")) +
+                  " WIB"
+              )
             ]),
             _vm._v(" "),
-            _c("input", {
-              attrs: { type: "submit", name: "", value: "Kumpulkan" }
-            })
-          ]
-        )
-      ])
+            _c("div", { staticClass: "label" }, [_vm._v("Waktu Tersisa")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "value time-left-info" }, [
+              _vm._v(_vm._s(_vm._f("moment")(_vm.asmts.due_date, "from")) + " ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: { enctype: "multipart/form-data" },
+                on: { submit: _vm.formSubmit }
+              },
+              [
+                _c("div", { staticClass: "custom-file" }, [
+                  _c("input", {
+                    staticClass: "custom-file-input",
+                    attrs: { type: "file", required: "" },
+                    on: { change: _vm.onFileChange }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-file-label",
+                      attrs: { for: "validatedCustomFile", id: "CustomFile" }
+                    },
+                    [_vm._v("Pilih file...")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "invalid-feedback" }, [
+                    _vm._v("Example invalid custom file feedback")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "submit", name: "", value: "Kumpulkan" }
+                })
+              ]
+            )
+          ])
+        : _c("div", { staticClass: "amt-submission col-md-4 pl-4" }, [
+            _c("div", { staticClass: "label" }, [_vm._v("Dikumpulkan pada")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "value" }, [
+              _vm._v(
+                _vm._s(
+                  _vm._f("moment")(_vm.asmts.date_updated, "DD MMMM YYYY")
+                ) +
+                  " pukul " +
+                  _vm._s(_vm._f("moment")(_vm.asmts.date_updated, "HH:mm")) +
+                  " WIB"
+              )
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "mt-3", attrs: { href: "" } }, [
+              _c("i", { staticClass: "fas fa-browser" }),
+              _vm._v("  " + _vm._s(_vm.asmts.sudent_file) + "\n        ")
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
     ])
   ])
 }
@@ -72610,11 +72664,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "amt-main-file" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "fas fa-browser" }),
-        _vm._v("Panduan.pdf\n\t\t\t\t\t")
-      ])
+    return _c("div", { staticClass: "amt-grade mt-4" }, [
+      _c("div", { staticClass: "grading" })
     ])
   }
 ]
@@ -104659,7 +104710,7 @@ var routes = [{
   component: _components_Assignments_AssignmentsUnsubmitted_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   name: 'tugas-detail',
-  path: '/tugas-detail/:id',
+  path: '/tugas-detail/:nis/:class/:id',
   component: _components_Assignments_AssignmentDetail_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   name: 'tugas-closed-detail',
