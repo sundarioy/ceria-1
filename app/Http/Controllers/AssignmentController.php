@@ -122,8 +122,8 @@ class AssignmentController extends Controller
 
 			if($isSubmitted) {
 				$submission = $this->submissionService->getSubmission($nis, $id_kelas, $assignment->id);
-				$isLate = $assignment->due_date < $submission->date_create ? true : false;
-				$collection_date = $submission->date_create;
+				$isLate = $assignment->due_date < $submission->date_created ? true : false;
+				$collection_date = $submission->date_created;
 				$grade = $submission->grade;
 			}
 			
@@ -168,7 +168,7 @@ class AssignmentController extends Controller
 			'isSubmitted' => $this->submissionService->checkSubmissionExists($nis, $id_kelas, $id_assignment),
 			'student_file' => $student_file,
 			'teacher_file' => $teacher_file,
-			'grade' => $assignment->grade
+			'grade' => $submission === null ? null : $submission->grade
 		);
 
 		return response()->json([
