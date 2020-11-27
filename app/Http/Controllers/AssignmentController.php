@@ -167,7 +167,8 @@ class AssignmentController extends Controller
 			'isDue' => Carbon::now() > $assignment->due_date ? true : false,
 			'isSubmitted' => $this->submissionService->checkSubmissionExists($nis, $id_kelas, $id_assignment),
 			'student_file' => $student_file,
-			'teacher_file' => $teacher_file
+			'teacher_file' => $teacher_file,
+			'grade' => $assignment->grade
 		);
 
 		return response()->json([

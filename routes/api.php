@@ -47,7 +47,7 @@ Route::post('assignment/{id?}/delete', [AssignmentController::class, 'safeDelete
 Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment', [AssignmentController::class, 'getListParentAssignment']);
 Route::get('nis/{nis?}/kelas/{id_kelas?}/assignment/{id_assignment?}', [AssignmentController::class, 'getParentDetailAssignment']);
 Route::get('teacher/{nip?}/assignment/{id_assignment?}', [AssignmentController::class, 'getTeacherDetailAssignment']);
-Route::get('teacher/{nip?}/assignment', [AssignmentController::class, 'getTeacherListAssignment']);
+Route::get('teacher/{nip?}/listassignment', [AssignmentController::class, 'getTeacherListAssignment']);
 
 Route::post('submission/store', [SubmissionController::class, 'store']);
 Route::get('submission/{id_assignment?}/teacher/{nip?}/collected', [SubmissionController::class, 'getCollectSubmission']);
