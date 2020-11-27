@@ -50,6 +50,7 @@
 								<select class="custom-select" v-model="selected" v-on:change="gradeChange">
 									<option v-bind:value="{ name: 'BSH'}">BSH</option>
 									<option v-bind:value="{ name: 'MB'}">MB</option>
+									<option v-bind:value="{ name: 'BB'}">MB</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -79,17 +80,20 @@ export default {
 			namaStudent : '',
 			idAssignment : '',
 			products: [
-      {name: 'BSH'},
-      {name: 'MB'},
-      ],
-      grade: null,
+			{name: 'BSH'},
+			{name: 'MB'},
+			{name: 'BB'},
+			],
+			grade: null,
+			username:'',
 		}
 	}, 
 	created() {
-    // let uri = "http://localhost:8000/api/asmt/asmtSubmission/"+this.$route.params.id;
-    let uri = "http://localhost:8000/api/asmt/asmtSubmission/"+this.$route.params.id;
+    this.username = sessionStorage.getItem('username');
+    // let uri = "http://localhost:8000/api/asmt/asmtSubmission/"+;
+    let uri = "https://ceriakan.id/api/submission/"+this.$route.params.id+"/teacher/"+this.username+"/collected";
     axios.get(uri).then((response) => {
-    	this.subms = response.data;        
+    	this.subms = response.data['data'];        
     });
   },  
   methods : {
@@ -99,35 +103,35 @@ export default {
   		this.idAssignment = assignment;
   	},
   	classChange(data) {
-      this.grade = this.selected.name;
+  		this.grade = this.selected.name;
       // console.log(this.selected.name);
     },
-  	setGrade() {
-  		if (this.$data.form.grade != null ) {
-  						
-  			let formData = new FormData();
-  			formData.append('grade', this.class);  			
-  			formData.append('comments', this.form.comments);
+    setGrade() {
+    	if (this.$data.form.grade != null ) {
 
-  			this.$swal.fire({
-  				title: 'Success',
-  				text: "Nilai sudah disubmit",
-  				icon: 'success',
-  				timer: 1000
-  			})
-        
-        axios.post('http://localhost:8000/api/asmt/gradeSubmit/'+subms.id, formData, config)
-        .then(function (response) {
-        	currentObj.success = response.data.success;
-        	this.$router.push({name: 'tugas-create'});
-        })
-        .catch(function (error) {
-        	currentObj.output = error;
-        });    
+    		let formData = new FormData();
+    		formData.append('grade', this.class);  			
+    		formData.append('comments', this.form.comments);
 
-        return true;
-      }      
-      e.preventDefault();
+    		this.$swal.fire({
+    			title: 'Success',
+    			text: "Nilai sudah disubmit",
+    			icon: 'success',
+    			timer: 1000
+    		})
+
+    		axios.post('http://localhost:8000/api/asmt/gradeSubmit/'+subms.id, formData, config)
+    		.then(function (response) {
+    			currentObj.success = response.data.success;
+    			this.$router.push({name: 'tugas-create'});
+    		})
+    		.catch(function (error) {
+    			currentObj.output = error;
+    		});    
+
+    		return true;
+    	}      
+    	e.preventDefault();
     }
   },
 }

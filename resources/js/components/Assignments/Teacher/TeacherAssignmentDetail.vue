@@ -5,15 +5,11 @@
         <span class="path">Tugas Belum Dinilai</span>
       </router-link>
       >
-      <span class="path">Penjumlahan Bilangan</span>
+      <span class="path">{{asmts.title}}</span>
       <hr>
     </header>
-    <content class="amt-detail-content col-md-12">      
-      <div class="amt-detail-title">
-        <h4>{{ asmts.title }}</h4>
-        <i>Dibuat oleh {{ asmts.teacher }} pada 8 Januari 2020 pukul 08:00 WIB</i>      
-      </div>
-      <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <content class="amt-detail-content col-md-12">            
+      <ul class="nav nav-tabs " id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Detail Tugas</a>
         </li>
@@ -43,20 +39,19 @@
 </template>
 
 <script>
-  export default {
+export default {
   data(){
     return {
       asmts:[],
+      usernme: '',
     }
   }, 
   created() {
-
-    let uri = "http://localhost:8000/api/asmt/asmtShow/"+this.$route.params.id;
+    this.username = sessionStorage.getItem('username');    
+    let uri = "https://ceriakan.id/api/teacher/"+this.username+"/assignment/"+this.$route.params.id;    
     axios.get(uri).then((response) => {
-      this.asmts = response.data;        
+      this.asmts = response.data['data'];        
     });
   },  
 }
-</script>
-
 </script>

@@ -2143,6 +2143,135 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      username: '',
+      forumMsg: []
+    };
+  },
+  created: function created() {
+    this.username = sessionStorage.getItem('username');
+  },
+  methods: {
+    sendMessage: function sendMessage(e) {
+      if (this.$data.message != null) {
+        var currentObj = this;
+        var config = {
+          headers: {
+            'content-type': 'multipart/form-data',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          }
+        };
+        var formData = new FormData();
+        formData.append('message', this.message);
+        formData.append('id_kelas', this.$route.params["class"]);
+        formData.append('id_tugas', this.$route.params.id);
+        formData.append('username', this.username);
+        formData.append('nama', this.username);
+        axios.post('https://ceriakan.id/api/discussion/store', formData, config).then(function (response) {
+          currentObj.success = response.data.success;
+          this.$router.push({
+            name: 'tugas-ungraded'
+          });
+        })["catch"](function (error) {
+          currentObj.output = error;
+        });
+        this.$swal.fire({
+          title: 'Success',
+          text: "Tugas created successfully",
+          icon: 'success',
+          timer: 1000
+        });
+        return true;
+      }
+
+      this.message;
+      e.target.reset();
+      e.preventDefault();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Assignments/Parent/PAsmtDetailPane.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Assignments/Parent/PAsmtDetailPane.vue?vue&type=script&lang=js& ***!
@@ -2227,7 +2356,7 @@ $(document).ready(function () {
       _this.student = response.data;
     }); // let uri = "http://localhost:8000/api/asmt/asmtShow/"+this.$route.params.id;
 
-    var uri = "https://ceriakan.id/api/nis/" + this.$route.params.nis + "/kelas/" + this.$route.params["class"] + "/assignment/" + this.$route.params.id;
+    var uri = "https://ceriakan.id/api/nis/" + this.username + "/kelas/" + this.$route.params["class"] + "/assignment/" + this.$route.params.id;
     axios.get(uri).then(function (response) {
       _this.asmts = response.data['data'];
     }); // let uri2 = "http://localhost:8000/api/asmt/asmtStudentSubms/"+this.$route.params.id;
@@ -2442,27 +2571,28 @@ var state = {
         formData.append('due_date', this.duedate + ' ' + this.duetime);
         formData.append('id_teacher', this.teacher);
         formData.append('isVisible', 1);
+        axios.post('https://ceriakan.id/api/assignment/store', formData, config).then(function (response) {
+          currentObj.success = response.data.success; // this.$router.push({name: 'tugas-create'});          
+
+          this.$router.push({
+            name: 'tugas-ungraded'
+          });
+        })["catch"](function (error) {
+          currentObj.output = error;
+        });
         this.$swal.fire({
           title: 'Success',
           text: "Tugas created successfully",
           icon: 'success',
           timer: 1000
-        }); // let uri = 'http://localhost:8000/api/asmt/asmtCreate';
-        // axios.post(uri, this.form).then((response) => {
-        //   this.$router.push({name: 'tugas-create'});          
-        // });
-        // axios.post('http://localhost:8000/api/asmt/asmtCreate', formData, config)
-
-        axios.post('https://ceriakan.id/api/assignment/store', formData, config).then(function (response) {
-          currentObj.success = response.data.success; // this.$router.push({name: 'tugas-create'});          
-        })["catch"](function (error) {
-          currentObj.output = error;
         });
         return true;
       }
 
-      e.preventDefault();
-      this.$router.go(0);
+      e.target.reset();
+      e.preventDefault(); // this.$router.push({name: 'tugas-ungraded'});      
+
+      window.location.href = 'http://localhost:8000/tugas-ungraded';
     }
   }
 });
@@ -2523,19 +2653,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      asmts: []
+      asmts: [],
+      username: ''
     };
   },
   created: function created() {
     var _this = this;
 
-    var uri = "http://localhost:8000/api/asmt/asmtShow/" + this.$route.params.id;
+    this.username = sessionStorage.getItem('username');
+    var uri = "https://ceriakan.id/api/teacher/" + this.username + "/assignment/" + this.$route.params.id;
     axios.get(uri).then(function (response) {
-      _this.asmts = response.data;
+      _this.asmts = response.data['data'];
     });
+  },
+  methods: {
+    deleteAsmt: function deleteAsmt() {
+      var _this2 = this;
+
+      this.$swal.fire({
+        title: 'Apakah anda yakin?',
+        text: "Tugas tidak akan ditampilkan kembali setelah dihapus.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+      }).then(function (result) {
+        if (result.value) {
+          _this2.$swal.fire({
+            title: 'Success!',
+            text: 'Tugas berhasil dihapus',
+            icon: 'success',
+            timer: 1000
+          });
+
+          var uri = 'https://ceriakan.id./assignment/' + _this2.$route.params.id + '/delete';
+
+          _this2.axios["delete"](uri).then(function (response) {
+            _this2.asmts.splice(_this2.asmts.indexOf(id), 1);
+          });
+
+          console.log("Deleted assignment with id ..." + id);
+        }
+      });
+    }
   }
 });
 
@@ -2621,6 +2789,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2632,17 +2801,21 @@ __webpack_require__.r(__webpack_exports__);
         name: 'BSH'
       }, {
         name: 'MB'
+      }, {
+        name: 'BB'
       }],
-      grade: null
+      grade: null,
+      username: ''
     };
   },
   created: function created() {
     var _this = this;
 
-    // let uri = "http://localhost:8000/api/asmt/asmtSubmission/"+this.$route.params.id;
-    var uri = "http://localhost:8000/api/asmt/asmtSubmission/" + this.$route.params.id;
+    this.username = sessionStorage.getItem('username'); // let uri = "http://localhost:8000/api/asmt/asmtSubmission/"+;
+
+    var uri = "https://ceriakan.id/api/submission/" + this.$route.params.id + "/teacher/" + this.username + "/collected";
     axios.get(uri).then(function (response) {
-      _this.subms = response.data;
+      _this.subms = response.data['data'];
     });
   },
   methods: {
@@ -2732,22 +2905,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      asmts: []
+      asmts: [],
+      usernme: ''
     };
   },
   created: function created() {
     var _this = this;
 
-    var uri = "http://localhost:8000/api/asmt/asmtShow/" + this.$route.params.id;
+    this.username = sessionStorage.getItem('username');
+    var uri = "https://ceriakan.id/api/teacher/" + this.username + "/assignment/" + this.$route.params.id;
     axios.get(uri).then(function (response) {
-      _this.asmts = response.data;
+      _this.asmts = response.data['data'];
     });
   }
 });
@@ -72470,51 +72641,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "container", attrs: { id: "forum-wrapper" } },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-12 row", attrs: { id: "forumTextArea" } },
+        [
+          _c(
+            "form",
+            {
+              attrs: { method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.sendMessage($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.message,
+                      expression: "message"
+                    }
+                  ],
+                  staticClass: "form-control input",
+                  domProps: { value: _vm.message },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.message = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row", attrs: { id: "forumMessages" } }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "messages-user" }, [
-            _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "messages-user-body" }, [
-              _vm._v("Apa Halo kabar semua?")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
+    return _c("div", { staticClass: "row", attrs: { id: "forumMessages" } }, [
+      _c("div", { staticClass: "container mt-3" }, [
+        _c("div", { staticClass: "messages-user" }, [
+          _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-body" }, [
+            _vm._v("Apa Halo kabar semua?")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "messages-user" }, [
-            _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "messages-user-body" }, [
-              _vm._v(
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
-          ])
+          _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "messages-user" }, [
+          _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-body" }, [
+            _vm._v(
+              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "messages-user" }, [
+          _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-body" }, [
+            _vm._v(
+              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "messages-user" }, [
+          _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-body" }, [
+            _vm._v(
+              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "messages-user" }, [
+          _c("div", { staticClass: "messages-user-name" }, [_vm._v("Rafly")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-body" }, [
+            _vm._v(
+              "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "messages-user-time" }, [_vm._v("10:00")])
         ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-12 row", attrs: { id: "forumTextArea" } },
-        [
-          _c("form", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("textarea", { staticClass: "form-control input" })
-            ])
-          ])
-        ]
-      )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "message-submit" }, [
+      _c("button", { staticClass: "btn" }, [
+        _c("i", { staticClass: "fas fa-arrow-right fa-2x" })
+      ])
     ])
   }
 ]
@@ -72736,7 +72990,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "inputJudul", placeholder: "" },
+                  attrs: {
+                    type: "text",
+                    id: "inputJudul",
+                    placeholder: "",
+                    required: ""
+                  },
                   domProps: { value: _vm.form.title },
                   on: {
                     input: function($event) {
@@ -72910,10 +73169,22 @@ var render = function() {
           { staticClass: "nav-item" },
           [
             _c("router-link", { attrs: { to: "" } }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fas fa-trash" }),
-                _vm._v("\n            Hapus\n          ")
-              ])
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: { href: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteAsmt()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-trash" }),
+                  _vm._v("\n            Hapus\n          ")
+                ]
+              )
             ])
           ],
           1
@@ -72922,33 +73193,57 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "amt-main col-md-12" }, [
-        _c("h5", [_vm._v(_vm._s(_vm.asmts.title))]),
+      _c("div", { staticClass: "amt-main col-md-12 mt-4" }, [
+        _c("div", { staticClass: "amt-detail-title" }, [
+          _c("h4", [_vm._v(_vm._s(_vm.asmts.title))]),
+          _vm._v(" "),
+          _c("i", [
+            _vm._v(
+              "Tugas ditambahkan pada " +
+                _vm._s(
+                  _vm._f("moment")(_vm.asmts.date_created, "DD MMMM YYYY")
+                ) +
+                " pukul " +
+                _vm._s(_vm._f("moment")(_vm.asmts.date_created, "HH:mm")) +
+                " WIB"
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "amt-main-desc pt-3" }, [
           _vm._v(
             "\n        Batas pengumpulan : " +
-              _vm._s(_vm.asmts.duedate) +
+              _vm._s(_vm._f("moment")(_vm.asmts.due_date, "DD MMMM YYYY")) +
               " pukul " +
-              _vm._s(_vm.asmts.duetime) +
+              _vm._s(_vm._f("moment")(_vm.asmts.due_date, "HH:mm")) +
               " WIB\n      "
           )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "amt-main-desc pt-3" }, [
-          _vm._v("\n        Kelas : " + _vm._s(_vm.asmts.class) + "\n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "amt-main-desc pt-3" }, [
           _vm._v("\n        " + _vm._s(_vm.asmts.description) + "\n      ")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "amt-main-file mt-4" }, [
-          _c("a", { attrs: { href: "" } }, [
-            _c("i", { staticClass: "fas fa-browser" }),
-            _vm._v(_vm._s(_vm.asmts.file) + "\n        ")
-          ])
-        ])
+        _vm.asmts.teacher_file != 0
+          ? _c("div", { staticClass: "amt-main-file mt-4" }, [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      "https://ceriakan.id/" +
+                      _vm.asmts.teacher_file[0].location +
+                      "/" +
+                      _vm.asmts.teacher_file[0].title
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-browser" }),
+                  _vm._v(_vm._s(_vm.asmts.teacher_file[0].title) + "\n        ")
+                ]
+              )
+            ])
+          : _vm._e()
       ])
     ])
   ])
@@ -73112,6 +73407,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("option", { domProps: { value: { name: "MB" } } }, [
                           _vm._v("MB")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { domProps: { value: { name: "BB" } } }, [
+                          _vm._v("MB")
                         ])
                       ]
                     )
@@ -73215,7 +73514,7 @@ var render = function() {
           _c("span", { staticClass: "path" }, [_vm._v("Tugas Belum Dinilai")])
         ]),
         _vm._v("\n    >\n    "),
-        _c("span", { staticClass: "path" }, [_vm._v("Penjumlahan Bilangan")]),
+        _c("span", { staticClass: "path" }, [_vm._v(_vm._s(_vm.asmts.title))]),
         _vm._v(" "),
         _c("hr")
       ],
@@ -73223,18 +73522,6 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("content", { staticClass: "amt-detail-content col-md-12" }, [
-      _c("div", { staticClass: "amt-detail-title" }, [
-        _c("h4", [_vm._v(_vm._s(_vm.asmts.title))]),
-        _vm._v(" "),
-        _c("i", [
-          _vm._v(
-            "Dibuat oleh " +
-              _vm._s(_vm.asmts.teacher) +
-              " pada 8 Januari 2020 pukul 08:00 WIB"
-          )
-        ])
-      ]),
-      _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "tab-content" }, [
@@ -73290,10 +73577,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "ul",
-      {
-        staticClass: "nav nav-tabs mt-3",
-        attrs: { id: "myTab", role: "tablist" }
-      },
+      { staticClass: "nav nav-tabs ", attrs: { id: "myTab", role: "tablist" } },
       [
         _c("li", { staticClass: "nav-item" }, [
           _c(
@@ -104710,7 +104994,7 @@ var routes = [{
   component: _components_Assignments_AssignmentsUnsubmitted_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   name: 'tugas-detail',
-  path: '/tugas-detail/:nis/:class/:id',
+  path: '/tugas-detail/:class/:id',
   component: _components_Assignments_AssignmentDetail_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   name: 'tugas-closed-detail',
@@ -105191,21 +105475,24 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/components/Assignments/ForumPane.vue ***!
   \***********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ForumPane_vue_vue_type_template_id_867279b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ForumPane.vue?vue&type=template&id=867279b6& */ "./resources/js/components/Assignments/ForumPane.vue?vue&type=template&id=867279b6&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ForumPane.vue?vue&type=script&lang=js& */ "./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ForumPane_vue_vue_type_template_id_867279b6___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ForumPane_vue_vue_type_template_id_867279b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -105219,6 +105506,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/Assignments/ForumPane.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ForumPane.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Assignments/ForumPane.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ForumPane_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

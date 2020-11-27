@@ -11,10 +11,10 @@
     <content class="amt-detail-content col-md-12">      
       <div class="container">
         <div class="row ml-4">
-          <form method="POST" enctype="multipart/form-data"  @submit.prevent="createAssignment">
+          <form method="POST" enctype="multipart/form-data" @submit.prevent="createAssignment">
             <div class="form-group">
               <label for="inputAddress">Judul Tugas</label>
-              <input type="text" class="form-control" id="inputJudul" placeholder="" v-model="form.title">
+              <input type="text" class="form-control" id="inputJudul" placeholder="" v-model="form.title" required="">
             </div>
             <div class="form-group">
               <label for="inputAddress">Deskripsi Tugas</label>             
@@ -157,32 +157,31 @@ export default {
         formData.append('id_teacher', this.teacher);        
         formData.append('isVisible', 1);
 
+        axios.post('https://ceriakan.id/api/assignment/store', formData, config)
+        .then(function (response) {
+          currentObj.success = response.data.success;
+          // this.$router.push({name: 'tugas-create'});          
+          this.$router.push({name: 'tugas-ungraded'});
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });  
+
         this.$swal.fire({
           title: 'Success',
           text: "Tugas created successfully",
           icon: 'success',
           timer: 1000
-        })
-        
-        // let uri = 'http://localhost:8000/api/asmt/asmtCreate';
-        // axios.post(uri, this.form).then((response) => {
-        //   this.$router.push({name: 'tugas-create'});          
-        // });
-
-        // axios.post('http://localhost:8000/api/asmt/asmtCreate', formData, config)
-        axios.post('https://ceriakan.id/api/assignment/store', formData, config)
-        .then(function (response) {
-          currentObj.success = response.data.success;
-          // this.$router.push({name: 'tugas-create'});          
-        })
-        .catch(function (error) {
-          currentObj.output = error;
-        });    
+        });
 
         return true;
-      }      
+      } 
+
+      e.target.reset();
       e.preventDefault();
-      this.$router.go(0);
+      // this.$router.push({name: 'tugas-ungraded'});      
+
+      window.location.href = 'http://localhost:8000/tugas-ungraded';
     }
   }
 }
