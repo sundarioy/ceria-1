@@ -42,4 +42,9 @@ class ChildRepository implements ChildRepositoryInterface {
         $child->delete();
         return $child;
     }
+
+    public function getChildByParentId($id)
+    {
+        return Child::where('nik_parent', $id)->first();
+    }
 }

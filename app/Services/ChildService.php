@@ -31,4 +31,8 @@ class ChildService {
     public function deleteChildById($id) {
         return $this->childRepository->deleteChildById($id);
     }
+
+    public function getChildByParentId($id) {
+        return $this->childRepository->getChildByParentId($id);
+    }
 }

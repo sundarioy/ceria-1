@@ -87,5 +87,17 @@ class ChildController extends Controller
     			'message' => 'Item gagal dihapus',
     		], 401);
     	}
-    }
+	}
+	
+	public function getChildByParentId($id) {
+		$child = $this->childService->getChildByParentId($id);
+		
+		if ($child) {
+    		return response()->json([
+    			'success' => true,
+				'message' => 'Child from parent '. $id,
+				'data' => $child
+    		], 200);
+    	}
+	}
 }

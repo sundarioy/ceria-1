@@ -8,4 +8,5 @@ interface ChildRepositoryInterface {
     public function createChild($data);
     public function updateChild($data);
     public function deleteChildById($id);
+    public function getChildByParentId($id);
 }

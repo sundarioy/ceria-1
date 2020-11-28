@@ -57,6 +57,7 @@ Route::post('submission/grade/{id_grade}/update', [SubmissionController::class, 
 Route::post('child/store', [ChildController::class, 'store']);
 Route::get('child', [ChildController::class, 'index']);
 Route::get('child/{id?}', [ChildController::class, 'show']);
+Route::get('child/parent/{id?}', [ChildController::class, 'getChildByParentId']);
 Route::post('child/update', [ChildController::class, 'update']);
 Route::delete('child/{id?}', [ChildController::class, 'destroy']);
 
