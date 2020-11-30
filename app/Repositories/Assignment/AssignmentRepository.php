@@ -68,6 +68,6 @@ class AssignmentRepository implements AssignmentRepositoryInterface {
 
     public function getAssignmentByTeacher($nip)
     {
-        return Assignment::where('id_teacher', $nip)->get();
+        return Assignment::where('id_teacher', $nip)->where('isVisible', '1')->get();
     }
 }
