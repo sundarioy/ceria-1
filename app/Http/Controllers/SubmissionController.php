@@ -108,7 +108,7 @@ class SubmissionController extends Controller
 		$classes = $this->kelasService->getKelasByTeacherId($nip);
 
 		foreach ($classes as $class) {
-			$childs[] = $this->childService->getChildByClassId($class->id);
+			$childs = array_merge($childs, $this->childService->getChildByClassId($class->id));
 		}
 		
 		foreach($childs as $child) {
