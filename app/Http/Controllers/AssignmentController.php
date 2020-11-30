@@ -205,12 +205,18 @@ class AssignmentController extends Controller
 		foreach($assignments as $assignment) {
 			$isGraded = true;
 			$submissions = $this->submissionService->getSubmissionByAssigmentId($assignment->id);
-			foreach($submissions as $submission) {
-				if($submission->grade === null) {
-					$isGraded = false;
-					break;
+
+			if($submissions != null) {
+				foreach($submissions as $submission) {
+					if($submission->grade === null) {
+						$isGraded = false;
+						break;
+					}
 				}
+			} else {
+				$isGraded = false;
 			}
+			
 			
 			$data[] = array(
 				'id' => $assignment->id,
