@@ -206,7 +206,7 @@ class AssignmentController extends Controller
 			$isGraded = true;
 			$submissions = $this->submissionService->getSubmissionByAssigmentId($assignment->id);
 
-			if($submissions === null) {
+			if(count($submissions) == 0) {
 				$isGraded = false;
 			} else {
 				foreach($submissions as $submission) {
