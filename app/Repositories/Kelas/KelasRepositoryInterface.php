@@ -8,4 +8,5 @@ interface KelasRepositoryInterface {
     public function createKelas($data);
     public function updateKelas($data);
     public function deleteKelasById($id);
+    public function getKelasByTeacherId($id);
 }

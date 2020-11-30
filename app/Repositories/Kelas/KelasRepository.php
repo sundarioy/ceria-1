@@ -42,4 +42,9 @@ class KelasRepository implements KelasRepositoryInterface {
         $kelas->delete();
         return $kelas;
     }
+
+    public function getKelasByTeacherId($id)
+    {
+        return Kelas::where('nomor_pegawai', $id)->get();
+    }
 }

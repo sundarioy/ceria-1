@@ -47,4 +47,9 @@ class ChildRepository implements ChildRepositoryInterface {
     {
         return Child::where('nik_parent', $id)->first();
     }
+
+    public function getChildByClassId($id)
+    {
+        return Child::where('id_kelas', $id)->get();
+    }
 }

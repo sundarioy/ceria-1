@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ChildService;
 use App\Services\DocumentService;
+use App\Services\KelasService;
 use Illuminate\Http\Request;
 use App\Services\SubmissionService;
 
@@ -12,15 +13,18 @@ class SubmissionController extends Controller
 	protected $submissionService;
 	protected $childService;
 	protected $documentService;
+	protected $kelasService;
 
     public function __construct(
 		SubmissionService $submissionService, 
 		ChildService $childService, 
-		DocumentService $documentService
+		DocumentService $documentService,
+		KelasService $kelasService
 	){
 		$this->submissionService = $submissionService;
 		$this->childService = $childService;
 		$this->documentService = $documentService;
+		$this->kelasService = $kelasService;
     }
 
     public function index() {
@@ -100,18 +104,36 @@ class SubmissionController extends Controller
 	
 	public function getCollectSubmission($id_assignment, $nip) {
 		$data = array();
-		$submissions = $this->submissionService->getSubmissionByAssigmentId($id_assignment);
-		foreach($submissions as $submission) {
-			$child = $this->childService->getChildById($submission->user_update);
-			$document = $this->documentService->getDocumentSubmission($submission->id);
-			$data[] = array(
-				'id' => $submission->id,
-				'nama' => $child->nama,
-				'nis' => $child->nomor_induk,
-				'date_created' => $submission->date_created,
-				'grade' => $submission->grade,
-				'file' => $document,
-			);
+		$childs = array();
+		$classes = $this->kelasService->getKelasByTeacherId($nip);
+
+		foreach ($classes as $class) {
+			$childs[] = $this->childService->getChildByClassId($class->id);
+		}
+		
+		foreach($childs as $child) {
+			$submission = $this->submissionService->getChildSubmission($child->nomor_induk, $id_assignment);
+
+			if($submission != null) {
+				$document = $this->documentService->getDocumentSubmission($submission->id);
+				$data[] = array(
+					'id' => $submission->id,
+					'nama' => $child->nama,
+					'nis' => $child->nomor_induk,
+					'date_created' => $submission->date_created,
+					'grade' => $submission->grade,
+					'file' => $document,
+				);
+			} else {
+				$data[] = array(
+					'id' => null,
+					'nama' => $child->nama,
+					'nis' => $child->nomor_induk,
+					'date_created' => null,
+					'grade' => null,
+					'file' => null,
+				);
+			}	
 		}
 
 		return response()->json([

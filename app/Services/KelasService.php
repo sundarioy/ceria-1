@@ -32,4 +32,8 @@ class KelasService {
     public function deleteKelasById($id) {
         return $this->kelasRepository->deleteKelasById($id);
     }
+
+    public function getKelasByTeacherId($id) {
+        return $this->kelasRepository->getKelasByTeacherId($id);
+    }
 }

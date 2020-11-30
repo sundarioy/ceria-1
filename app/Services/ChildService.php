@@ -35,4 +35,8 @@ class ChildService {
     public function getChildByParentId($id) {
         return $this->childRepository->getChildByParentId($id);
     }
+
+    public function getChildByClassId($id) {
+        return $this->childRepository->getChildByClassId($id);
+    }
 }

@@ -64,4 +64,9 @@ class SubmissionRepository implements SubmissionRepositoryInterface {
             'grade' => $data->grade
         ]);
     }
+
+    public function getChildSubmission($nis, $id_assignment)
+    {
+        return Submission::where('user_update', $nis)->where('id_assignment', $id_assignment)->first();
+    }
 }

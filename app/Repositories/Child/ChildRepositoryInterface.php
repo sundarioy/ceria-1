@@ -9,4 +9,5 @@ interface ChildRepositoryInterface {
     public function updateChild($data);
     public function deleteChildById($id);
     public function getChildByParentId($id);
+    public function getChildByClassId($id);
 }

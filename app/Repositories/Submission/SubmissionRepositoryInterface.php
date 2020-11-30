@@ -11,4 +11,5 @@ interface SubmissionRepositoryInterface {
     public function checkSubmission($nis, $id_kelas, $id_assignment);
     public function getSubmissionByAssigmentId($id_assignment);
     public function gradingSubmission($data);
+    public function getChildSubmission($nis, $id_assignment);
 }

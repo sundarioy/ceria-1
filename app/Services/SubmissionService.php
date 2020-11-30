@@ -79,4 +79,8 @@ class SubmissionService {
         $data=array("id" => $grade->id, "description" => $request->description );
         return $this->indicatorRepository->updateIndicator($data);
     }
+
+    public function getChildSubmission($nis, $id_assignment) {
+        return $this->submissionRepository->getChildSubmission($nis, $id_assignment);
+    }
 }
