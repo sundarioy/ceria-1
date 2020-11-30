@@ -104,38 +104,37 @@ class SubmissionController extends Controller
 	
 	public function getCollectSubmission($id_assignment, $nip) {
 		$data = array();
-		$childs = array();
 		$classes = $this->kelasService->getKelasByTeacherId($nip);
 
 		foreach ($classes as $class) {
-			$childs = array_merge($childs, $this->childService->getChildByClassId($class->id));
-		}
-		
-		foreach($childs as $child) {
-			$submission = $this->submissionService->getChildSubmission($child->nomor_induk, $id_assignment);
-
-			if($submission != null) {
-				$document = $this->documentService->getDocumentSubmission($submission->id);
-				$data[] = array(
-					'id' => $submission->id,
-					'nama' => $child->nama,
-					'nis' => $child->nomor_induk,
-					'date_created' => $submission->date_created,
-					'grade' => $submission->grade,
-					'file' => $document,
-				);
-			} else {
-				$data[] = array(
-					'id' => null,
-					'nama' => $child->nama,
-					'nis' => $child->nomor_induk,
-					'date_created' => null,
-					'grade' => null,
-					'file' => null,
-				);
+			$childs = $this->childService->getChildByClassId($class->id);
+			foreach($childs as $child) {
+				$submission = $this->submissionService->getChildSubmission($child->nomor_induk, $id_assignment);
+	
+				if($submission != null) {
+					$document = $this->documentService->getDocumentSubmission($submission->id);
+					$data[] = array(
+						'id' => $submission->id,
+						'nama' => $child->nama,
+						'nis' => $child->nomor_induk,
+						'date_created' => $submission->date_created,
+						'grade' => $submission->grade,
+						'file' => $document,
+					);
+				} else {
+					$data[] = array(
+						'id' => null,
+						'nama' => $child->nama,
+						'nis' => $child->nomor_induk,
+						'date_created' => null,
+						'grade' => null,
+						'file' => null,
+					);
+				}	
 			}	
 		}
-
+		
+		
 		return response()->json([
 			'success' => true,
 			'message' => 'Submission collected',
