@@ -206,15 +206,15 @@ class AssignmentController extends Controller
 			$isGraded = true;
 			$submissions = $this->submissionService->getSubmissionByAssigmentId($assignment->id);
 
-			if($submissions != null) {
+			if($submissions === null) {
+				$isGraded = false;
+			} else {
 				foreach($submissions as $submission) {
 					if($submission->grade === null) {
 						$isGraded = false;
 						break;
 					}
 				}
-			} else {
-				$isGraded = false;
 			}
 			
 			
