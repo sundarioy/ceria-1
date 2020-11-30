@@ -119,7 +119,7 @@ class SubmissionController extends Controller
 						'nis' => $child->nomor_induk,
 						'date_created' => $submission->date_created,
 						'grade' => $submission->grade,
-						'file' => $document,
+						'file' => $document != null ? $document : null,
 					);
 				} else {
 					$data[] = array(
