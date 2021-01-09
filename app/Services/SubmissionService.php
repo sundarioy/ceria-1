@@ -52,10 +52,10 @@ class SubmissionService {
 
     public function checkSubmissionExists($nis, $id_kelas, $id_assignment) {
         $submission = $this->submissionRepository->checkSubmission($nis, $id_kelas, $id_assignment);
-        if($submission === null) {
-            return false;
-        } else {
+        if($submission) {
             return true;
+        } else {
+            return false;
         }
     }
 
