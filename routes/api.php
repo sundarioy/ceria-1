@@ -9,6 +9,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,3 +72,5 @@ Route::post('discussion/store', [DiscussionController::class, 'store']);
 Route::get('discussion/assignment/{id_assignment}/class/{id_class}', [DiscussionController::class, 'getDiscussion']);
 Route::post('discussion/{id}/update', [DiscussionController::class, 'update']);
 Route::delete('discussion/{id?}', [DiscussionController::class, 'destroy']);
+
+Route::post('attendance/store', [AttendanceController::class, 'store']);
