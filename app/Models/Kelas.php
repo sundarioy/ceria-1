@@ -17,7 +17,9 @@ class Kelas extends Model
     	'kelas',
     	'thn_akademik',
     	'status',
-    	'nomor_pegawai'
+        'nomor_pegawai',
+        'foto',
+        'deskripsi'
     ];
 
     public function teacher() {

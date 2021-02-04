@@ -67,6 +67,7 @@ Route::get('kelas', [KelasController::class, 'index']);
 Route::get('kelas/{id?}', [KelasController::class, 'show']);
 Route::post('kelas/update', [KelasController::class, 'update']);
 Route::delete('kelas/{id?}', [KelasController::class, 'destroy']);
+Route::get('kelas/teacher/{id?}', [KelasController::class, 'getClassByTeacher']);
 
 Route::post('discussion/store', [DiscussionController::class, 'store']);
 Route::get('discussion/assignment/{id_assignment}/class/{id_class}', [DiscussionController::class, 'getDiscussion']);

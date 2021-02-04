@@ -87,5 +87,14 @@ class KelasController extends Controller
     			'message' => 'Item gagal dihapus',
     		], 401);
     	}
-    }
+	}
+	
+	public function getClassByTeacher($id) {
+		$kelas = $this->kelasService->getKelasByTeacherId($id);
+		return response([
+			'success' => true,
+			'message' => 'List kelas',
+			'data' => $kelas
+		],200);
+	}
 }

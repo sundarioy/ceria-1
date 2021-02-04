@@ -3,6 +3,7 @@ namespace App\Repositories\Kelas;
 
 use App\Models\Kelas;
 use App\Repositories\Kelas\KelasRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class KelasRepository implements KelasRepositoryInterface {
 
@@ -18,11 +19,18 @@ class KelasRepository implements KelasRepositoryInterface {
 
     public function createKelas($data)
     {
+        $path = Storage::put(
+            'public/file',
+            $data->file('foto')
+        );
+
         return Kelas::create([
 			'kelas' => $data->kelas,
 			'thn_akademik' => $data->thn_akademik,
 			'status' => $data->status,
-			'nomor_pegawai' => $data->nomor_pegawai
+            'nomor_pegawai' => $data->nomor_pegawai,
+            'foto' => $path,
+            'deskripsi' => $data->deskripsi
 		]);
     }
 
