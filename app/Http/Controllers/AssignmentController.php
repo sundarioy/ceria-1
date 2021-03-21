@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\AssignmentService;
 use App\Services\DocumentService;
+use App\Services\GradeService;
+use App\Services\IndicatorService;
 use App\Services\SubmissionService;
 use Carbon\Carbon;
 
@@ -13,15 +15,21 @@ class AssignmentController extends Controller
 	protected $assignmentService;
 	protected $submissionService;
 	protected $documentService;
+    protected $indicatorService;
+    protected $gradeService;
 
     public function  __construct(
-		AssignmentService $assignmentService, 
+		AssignmentService $assignmentService,
 		SubmissionService $submissionService,
-		DocumentService $documentService
+		DocumentService $documentService,
+        GradeService $gradeService,
+        IndicatorService $indicatorService
 	){
 		$this->assignmentService = $assignmentService;
 		$this->submissionService = $submissionService;
 		$this->documentService = $documentService;
+        $this->indicatorService = $indicatorService;
+        $this->gradeService = $gradeService;
     }
 
     public function index() {
@@ -86,7 +94,7 @@ class AssignmentController extends Controller
 
     public function destroy($id) {
 		$assignment = $this->assignmentService->deleteAssignmentById($id);
-		
+
     	if ($assignment) {
     		return response()->json([
     			'success' => true,
@@ -109,7 +117,7 @@ class AssignmentController extends Controller
             ], 200);
         }
 	}
-	
+
 	public function getListParentAssignment($nis, $id_kelas) {
 		$data = array();
 		$assignments = $this->assignmentService->getAllVisibleAssignment();
@@ -126,7 +134,7 @@ class AssignmentController extends Controller
 				$collection_date = $submission->date_created;
 				$grade = $submission->grade;
 			}
-			
+
 			$data[] = array(
 				'id' => $assignment->id,
 				'title' => $assignment->title,
@@ -153,6 +161,8 @@ class AssignmentController extends Controller
 			$student_file = null;
 		} else {
 			$student_file = $this->documentService->getDocumentSubmission($submission->id);
+            $grade = $this->gradeService->getGradeBySubmissionId($submission->id);
+            $indicator = $this->indicatorService->getIndicatorById($grade->id_indicator);
 		}
 		$teacher_file = $this->documentService->getDocumentAssignment($assignment->id);
 
@@ -168,7 +178,8 @@ class AssignmentController extends Controller
 			'isSubmitted' => $this->submissionService->checkSubmissionExists($nis, $id_kelas, $id_assignment),
 			'student_file' => $student_file,
 			'teacher_file' => $teacher_file,
-			'grade' => $submission === null ? null : $submission->grade
+			'grade' => $submission === null ? null : $submission->grade,
+            'komentar' => $submission === null ? null : $indicator->description
 		);
 
 		return response()->json([
@@ -216,8 +227,8 @@ class AssignmentController extends Controller
 					}
 				}
 			}
-			
-			
+
+
 			$data[] = array(
 				'id' => $assignment->id,
 				'title' => $assignment->title,

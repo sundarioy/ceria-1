@@ -36,4 +36,9 @@ class GradeRepository implements GradeRepositoryInterface {
     {
         return $grade = Grade::find($id)->delete();
     }
+
+    public function getGradeBySubmissionId($id_submission)
+    {
+        return Grade::where('id_submission', $id_submission)->first();
+    }
 }

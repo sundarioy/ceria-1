@@ -32,4 +32,8 @@ class GradeService {
     public function deleteGradeById($id) {
         return $this->gradeRepository->deleteGradeById($id);
     }
+
+    public function getGradeBySubmissionId($id_submission) {
+        return $this->gradeRepository->getGradeBySubmissionId($id_submission);
+    }
 }
