@@ -7,6 +7,7 @@ use App\Services\AssignmentService;
 use App\Services\DocumentService;
 use App\Services\GradeService;
 use App\Services\IndicatorService;
+use App\Services\KelasAssignmentService;
 use App\Services\SubmissionService;
 use Carbon\Carbon;
 
@@ -17,19 +18,22 @@ class AssignmentController extends Controller
 	protected $documentService;
     protected $indicatorService;
     protected $gradeService;
+    protected $kelasAssignmentService;
 
     public function  __construct(
 		AssignmentService $assignmentService,
 		SubmissionService $submissionService,
 		DocumentService $documentService,
         GradeService $gradeService,
-        IndicatorService $indicatorService
+        IndicatorService $indicatorService,
+        KelasAssignmentService $kelasAssignmentService
 	){
 		$this->assignmentService = $assignmentService;
 		$this->submissionService = $submissionService;
 		$this->documentService = $documentService;
         $this->indicatorService = $indicatorService;
         $this->gradeService = $gradeService;
+        $this->kelasAssignmentService = $kelasAssignmentService;
     }
 
     public function index() {
@@ -43,8 +47,8 @@ class AssignmentController extends Controller
 
     public function store(Request $request) {
 		$assignment = $this->assignmentService->createAssignment($request);
-
-		if ($assignment) {
+        $kelas = $this->kelasAssignmentService->createKelasAssignment($request, $assignment->id);
+		if ($assignment && $kelas) {
 			return response()->json([
 				'success' => true,
                 'message' => 'Item berhasil disimpan',
@@ -120,9 +124,10 @@ class AssignmentController extends Controller
 
 	public function getListParentAssignment($nis, $id_kelas) {
 		$data = array();
-		$assignments = $this->assignmentService->getAllVisibleAssignment();
+        $kelasAssignments = $this->kelasAssignmentService->getAllKelasAssignmentByKelasId($id_kelas);
 
-		foreach($assignments as $assignment) {
+		foreach($kelasAssignments as $kelasAssignment) {
+            $assignment = $this->assignmentService->getAssignmentById($kelasAssignment->id_assignment);
 			$isSubmitted = $this->submissionService->checkSubmissionExists($nis, $id_kelas, $assignment->id);
 			$isLate = false;
 			$collection_date = null;

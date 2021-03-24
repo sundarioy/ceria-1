@@ -82,6 +82,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Discussion\DiscussionRepositoryInterface',
             'App\Repositories\Discussion\DiscussionRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\KelasAssignment\KelasAssignmentRepositoryInterface',
+            'App\Repositories\KelasAssignment\KelasAssignmentRepository'
+        );
     }
 
     /**

@@ -23,8 +23,9 @@ class KelasAssignmentService {
         return $this->kelasAssignmentRepository->getKelasAssignmentById($id);
     }
 
-    public function createKelasAssignment(Request $request)
+    public function createKelasAssignment(Request $request, $assignment_id)
     {
+        $request['id_assignment'] = $assignment_id;
         return $this->kelasAssignmentRepository->createKelasAssignment($request);
     }
 
@@ -36,5 +37,10 @@ class KelasAssignmentService {
     public function deleteKelasAssignmentById($id)
     {
         return $this->kelasAssignmentRepository->deleteKelasAssignmentById($id);
+    }
+
+    public function getAllKelasAssignmentByKelasId($id_kelas)
+    {
+        return $this->kelasAssignmentRepository->getAllKelasAssigmentByKelasId($id_kelas);
     }
 }

@@ -36,4 +36,9 @@ class KelasAssignmentRepository implements KelasAssignmentRepositoryInterface {
     {
         return KelasAssignment::find($id)->delete();
     }
+
+    public function getAllKelasAssigmentByKelasId($id)
+    {
+        return KelasAssignment::where('id_class', $id)->get();
+    }
 }
