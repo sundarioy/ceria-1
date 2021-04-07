@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ChildService;
 use Illuminate\Http\Request;
 use App\Services\KelasService;
 
 class KelasController extends Controller
 {
     protected $kelasService;
+    protected $childService;
 
-    public function __construct(KelasService $kelasService)
+    public function __construct(KelasService $kelasService, ChildService $childService)
     {
         $this->kelasService = $kelasService;
+        $this->childService = $childService;
     }
 
     public function index() {
@@ -41,12 +44,13 @@ class KelasController extends Controller
 
     public function show($id) {
     	$kelas = $this->kelasService->getKelasById($id);
-
+        $childs = $this->childService->getChildByClassId($id);
     	if($kelas) {
     		return response()->json([
     			'success' => true,
     			'message' => 'Detail Kelas',
-    			'data' => $kelas
+    			'data' => $kelas,
+                'students' => $childs
     		], 200);
     	} else {
     		return response()->json([
@@ -75,7 +79,7 @@ class KelasController extends Controller
 
     public function destroy($id) {
 		$kelas = $this->kelasService->deleteKelasById($id);
-		
+
     	if ($kelas) {
     		return response()->json([
     			'success' => true,
@@ -88,7 +92,7 @@ class KelasController extends Controller
     		], 401);
     	}
 	}
-	
+
 	public function getClassByTeacher($id) {
 		$kelas = $this->kelasService->getKelasByTeacherId($id);
 		return response([
