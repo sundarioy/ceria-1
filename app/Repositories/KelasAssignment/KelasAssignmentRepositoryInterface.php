@@ -8,4 +8,5 @@ interface KelasAssignmentRepositoryInterface {
     public function createKelasAssignment($data);
     public function updateKelasAssignment($data);
     public function deleteKelasAssignmentById($id);
+    public function getAllKelasAssigmentByKelasId($id);
 }
