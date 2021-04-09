@@ -37,4 +37,9 @@ class TemaIndicatorRepository implements TemaIndicatorRepositoryInterface {
     {
         return TemaIndicator::find($id)->delete();
     }
+
+    public function getTemaIndicatorByTemaSubtema($id_tema, $id_subtema)
+    {
+        return TemaIndicator::where('id_tema', $id_tema)->where('id_subtema', $id_subtema)->get();
+    }
 }

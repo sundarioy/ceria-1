@@ -88,4 +88,22 @@ class SubtemaController extends Controller
     		], 401);
     	}
     }
+
+    public function getSubtemaByTema($id) {
+        $tema = $this->subTemaService->getSubtemaByTema($id);
+
+    	if($tema) {
+    		return response()->json([
+    			'success' => true,
+    			'message' => 'List Subtema',
+    			'data' => $tema
+    		], 200);
+    	} else {
+    		return response()->json([
+    			'success' => false,
+    			'message' => 'Tema with id '.$id.' not found',
+    			'data' => ''
+    		], 401);
+    	}
+    }
 }

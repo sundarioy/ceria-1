@@ -8,4 +8,5 @@ interface RaportRepositoryInterface {
     public function createRaport($data);
     public function updateRaport($data);
     public function deleteRaportById($id);
+    public function getRaportByNis($nis);
 }

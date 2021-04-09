@@ -31,4 +31,8 @@ class TemaIndicatorService {
     public function deleteTemaIndicatorById($id) {
         return $this->temaIndicatorRepository->deleteTemaIndicatorById($id);
     }
+
+    public function getTemaIndicatorByTemaSubtema($id_tema, $id_subtema) {
+        return $this->temaIndicatorRepository->getTemaIndicatorByTemaSubtema($id_tema, $id_subtema);
+    }
 }

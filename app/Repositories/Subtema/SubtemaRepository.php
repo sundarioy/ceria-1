@@ -35,4 +35,9 @@ class SubtemaRepository implements SubtemaRepositoryInterface {
     {
         return Subtema::find($id)->delete();
     }
+
+    public function getSubtemaByTema($id)
+    {
+        return Subtema::where('id_tema', $id)->get();
+    }
 }

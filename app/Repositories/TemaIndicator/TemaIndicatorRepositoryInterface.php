@@ -8,4 +8,5 @@ interface TemaIndicatorRepositoryInterface {
     public function createTemaIndicator($data);
     public function updateTemaIndicator($data);
     public function deleteTemaIndicatorById($id);
+    public function getTemaIndicatorByTemaSubtema($id_tema, $id_subtema);
 }

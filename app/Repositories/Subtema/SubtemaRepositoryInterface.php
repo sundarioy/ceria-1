@@ -8,4 +8,5 @@ interface SubtemaRepositoryInterface {
     public function createSubtema($data);
     public function updateSubtema($data);
     public function deleteSubtemaById($id);
+    public function getSubtemaByTema($id);
 }

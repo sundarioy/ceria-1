@@ -31,4 +31,8 @@ class SubtemaService {
     public function deleteSubtemaById($id) {
         return $this->subtemaRepository->deleteSubtemaById($id);
     }
+
+    public function getSubtemaByTema($id) {
+        return $this->subtemaRepository->getSubtemaById($id);
+    }
 }

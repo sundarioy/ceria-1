@@ -10,6 +10,10 @@ use App\Http\Controllers\ChildController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\TemaController;
+use App\Http\Controllers\SubtemaController;
+use App\Http\Controllers\TemaIndicatorController;
+use App\Http\Controllers\RaportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,12 +89,14 @@ Route::delete('tema/{id?}', [TemaController::class, 'destroy']);
 Route::post('tema/indicator/store', [TemaIndicatorController::class, 'store']);
 Route::get('tema/indicator', [TemaIndicatorController::class, 'index']);
 Route::get('tema/indicator/{id?}', [TemaIndicatorController::class, 'show']);
+Route::get('tema/{id_tema}/subtema/{id_subtema}/indicator', [TemaIndicatorController::class, 'getTemaIndicatorByTemaSubtema']);
 Route::post('tema/indicator/update', [TemaIndicatorController::class, 'update']);
 Route::delete('tema/indicator/{id?}', [TemaIndicatorController::class, 'destroy']);
 
 Route::post('subtema/store', [SubtemaController::class, 'store']);
 Route::get('subtema', [SubtemaController::class, 'index']);
 Route::get('subtema/{id?}', [SubtemaController::class, 'show']);
+Route::get('subtema/tema/{id?}', [SubtemaController::class, 'getSubtemaByTema']);
 Route::post('subtema/update', [SubtemaController::class, 'update']);
 Route::delete('subtema/{id?}', [SubtemaController::class, 'destroy']);
 
@@ -99,3 +105,4 @@ Route::get('raport', [RaportController::class, 'index']);
 Route::get('raport/{id?}', [RaportController::class, 'show']);
 Route::post('raport/update', [RaportController::class, 'update']);
 Route::delete('raport/{id?}', [RaportController::class, 'destroy']);
+Route::get('raport/nis/{nis?}', [RaportController::class, 'getRaportByNis']);

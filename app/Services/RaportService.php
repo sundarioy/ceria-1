@@ -31,4 +31,8 @@ class RaportService {
     public function deleteRaportById($id) {
         return $this->raportRepository->deleteRaportById($id);
     }
+
+    public function getRaportByNis($nis) {
+        return $this->raportRepository->getRaportByNis($nis);
+    }
 }

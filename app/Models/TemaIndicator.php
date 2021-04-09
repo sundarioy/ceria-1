@@ -14,7 +14,7 @@ class TemaIndicator extends Model
 
     protected $fillable = [
     	'id',
-    	'decription',
+    	'description',
     	'id_tema',
     	'id_subtema',
     ];

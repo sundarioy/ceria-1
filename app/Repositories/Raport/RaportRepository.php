@@ -18,29 +18,34 @@ class RaportRepository implements RaportRepositoryInterface {
     public function createRaport($data)
     {
         return Raport::create([
-            'nilai' => $data->title,
-            'date_created' => $data->id_tema,
-            'nis' => $data->title,
-            'id_tema' => $data->title,
-            'id_subtema' => $data->title,
-            'id_indicator' => $data->title
+            'nilai' => $data->nilai,
+            'date_created' => $data->date_created,
+            'nis' => $data->nis,
+            'id_tema' => $data->id_tema,
+            'id_subtema' => $data->id_subtema,
+            'id_indicator' => $data->id_indicator
         ]);
     }
 
     public function updateRaport($data)
     {
         return Raport::find($data->id)->update([
-            'nilai' => $data->title,
-            'date_created' => $data->id_tema,
-            'nis' => $data->title,
-            'id_tema' => $data->title,
-            'id_subtema' => $data->title,
-            'id_indicator' => $data->title
+            'nilai' => $data->nilai,
+            'date_created' => $data->date_created,
+            'nis' => $data->nis,
+            'id_tema' => $data->id_tema,
+            'id_subtema' => $data->id_subtema,
+            'id_indicator' => $data->id_indicator
         ]);
     }
 
     public function deleteRaportById($id)
     {
         return Raport::find($id)->delete();
+    }
+
+    public function getRaportByNis($nis)
+    {
+        return Raport::where('nis', $nis)->get();
     }
 }

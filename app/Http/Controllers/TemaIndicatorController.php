@@ -88,4 +88,22 @@ class TemaIndicatorController extends Controller
     		], 401);
     	}
     }
+
+    public function getTemaIndicatorByTemaSubtema($id_tema, $id_subtema) {
+        $tema = $this->temaIndicatorSevice->getTemaIndicatorByTemaSubtema($id_tema, $id_subtema);
+
+    	if($tema) {
+    		return response()->json([
+    			'success' => true,
+    			'message' => 'List Tema Indicator',
+    			'data' => $tema
+    		], 200);
+    	} else {
+    		return response()->json([
+    			'success' => false,
+    			'message' => 'not found',
+    			'data' => ''
+    		], 401);
+    	}
+    }
 }
