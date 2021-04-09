@@ -75,3 +75,27 @@ Route::post('discussion/{id}/update', [DiscussionController::class, 'update']);
 Route::delete('discussion/{id?}', [DiscussionController::class, 'destroy']);
 
 Route::post('attendance/store', [AttendanceController::class, 'store']);
+
+Route::post('tema/store', [TemaController::class, 'store']);
+Route::get('tema', [TemaController::class, 'index']);
+Route::get('tema/{id?}', [TemaController::class, 'show']);
+Route::post('tema/update', [TemaController::class, 'update']);
+Route::delete('tema/{id?}', [TemaController::class, 'destroy']);
+
+Route::post('tema/indicator/store', [TemaIndicatorController::class, 'store']);
+Route::get('tema/indicator', [TemaIndicatorController::class, 'index']);
+Route::get('tema/indicator/{id?}', [TemaIndicatorController::class, 'show']);
+Route::post('tema/indicator/update', [TemaIndicatorController::class, 'update']);
+Route::delete('tema/indicator/{id?}', [TemaIndicatorController::class, 'destroy']);
+
+Route::post('subtema/store', [SubtemaController::class, 'store']);
+Route::get('subtema', [SubtemaController::class, 'index']);
+Route::get('subtema/{id?}', [SubtemaController::class, 'show']);
+Route::post('subtema/update', [SubtemaController::class, 'update']);
+Route::delete('subtema/{id?}', [SubtemaController::class, 'destroy']);
+
+Route::post('raport/store', [RaportController::class, 'store']);
+Route::get('raport', [RaportController::class, 'index']);
+Route::get('raport/{id?}', [RaportController::class, 'show']);
+Route::post('raport/update', [RaportController::class, 'update']);
+Route::delete('raport/{id?}', [RaportController::class, 'destroy']);
