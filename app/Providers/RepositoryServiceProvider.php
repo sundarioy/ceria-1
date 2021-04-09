@@ -87,6 +87,26 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\KelasAssignment\KelasAssignmentRepositoryInterface',
             'App\Repositories\KelasAssignment\KelasAssignmentRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Tema\TemaRepositoryInterface',
+            'App\Repositories\Tema\TemaRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\TemaIndicator\TemaIndicatorRepositoryInterface',
+            'App\Repositories\TemaIndicator\TemaIndicatorRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\Subtema\SubtemaRepositoryInterface',
+            'App\Repositories\Subtema\SubtemaRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\Raport\RaportRepositoryInterface',
+            'App\Repositories\Raport\RaportRepository'
+        );
     }
 
     /**
