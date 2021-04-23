@@ -115,4 +115,4 @@ Route::post('bulletin/update', [BulletinController::class, 'update']);
 Route::post('bulletin/approval', [BulletinController::class, 'approval']);
 Route::get('bulletin/approval', [BulletinController::class, 'notApproved']);
 Route::get('bulletin/{username}/approval/notif', [BulletinController::class, 'notifApproved']);
-Route::delete('parent/{nik?}', [BulletinController::class, 'destroy']);
+Route::delete('bulletin/{id?}', [BulletinController::class, 'destroy']);
