@@ -3,6 +3,7 @@ namespace App\Repositories\Bulletin;
 
 use App\Models\Bulletin;
 use App\Repositories\Bulletin\BulletinRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class BulletinRepository implements BulletinRepositoryInterface {
 
@@ -18,6 +19,11 @@ class BulletinRepository implements BulletinRepositoryInterface {
 
     public function createBulletin($data)
     {
+        $path = Storage::put(
+            'public/file',
+            $data->file('thumbnail')
+        );
+
         return Bulletin::create([
             'update_date' => $data->update_date,
             'approval_date' => $data->approval_date,
@@ -26,7 +32,7 @@ class BulletinRepository implements BulletinRepositoryInterface {
             'user_update' => $data->user_update,
             'isApproved' => $data->isApproved,
             'comment' => $data->comment,
-            'thumbnail' => $data->thumbnail
+            'thumbnail' => $path
         ]);
     }
 
