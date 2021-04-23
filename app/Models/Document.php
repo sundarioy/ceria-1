@@ -20,7 +20,8 @@ class Document extends Model
         'type',
         'id_event',
         'id_submission',
-        'id_assignment'
+        'id_assignment',
+        'id_bulletin'
     ];
 
     public function event() {

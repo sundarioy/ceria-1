@@ -14,8 +14,12 @@ class Bulletin extends Model
     protected $fillable = [
         'id',
         'update_date',
+        'approval_date',
         'title',
         'content',
-        'user_update'
-    ];  
+        'user_update',
+        'isApproved',
+        'comment',
+        'thumbnail'
+    ];
 }

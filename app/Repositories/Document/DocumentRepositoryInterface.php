@@ -12,4 +12,6 @@ interface DocumentRepositoryInterface {
     public function getDocumentByAssignment($id_assignment);
     public function createDocumentSubmission($data, $submission);
     public function getDocumentBySubmission($id_submission);
+    public function createDocumentBulletin($data, $bulletin);
+    public function getDocumentByBulletin($id_bulletin);
 }

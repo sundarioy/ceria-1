@@ -14,6 +14,7 @@ use App\Http\Controllers\TemaController;
 use App\Http\Controllers\SubtemaController;
 use App\Http\Controllers\TemaIndicatorController;
 use App\Http\Controllers\RaportController;
+use App\Http\Controllers\BulletinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,3 +107,12 @@ Route::get('raport/{id?}', [RaportController::class, 'show']);
 Route::post('raport/update', [RaportController::class, 'update']);
 Route::delete('raport/{id?}', [RaportController::class, 'destroy']);
 Route::get('raport/nis/{nis?}', [RaportController::class, 'getRaportByNis']);
+
+Route::post('bulletin/store', [BulletinController::class, 'store']);
+Route::get('bulletin', [BulletinController::class, 'index']);
+Route::get('bulletin/{id?}', [BulletinController::class, 'show']);
+Route::post('bulletin/update', [BulletinController::class, 'update']);
+Route::post('bulletin/approval', [BulletinController::class, 'approval']);
+Route::get('bulletin/approval', [BulletinController::class, 'notApproved']);
+Route::get('bulletin/{username}/approval/notif', [BulletinController::class, 'notifApproved']);
+Route::delete('parent/{nik?}', [BulletinController::class, 'destroy']);

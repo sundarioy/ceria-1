@@ -40,4 +40,8 @@ class DocumentService {
     public function getDocumentSubmission($id_submission) {
         return $this->documentRepository->getDocumentBySubmission($id_submission);
     }
+
+    public function getDocumentBulletin($id_bulletin) {
+        return $this->documentRepository->getDocumentByBulletin($id_bulletin);
+    }
 }
