@@ -143,7 +143,7 @@ export default {
       this.file = e.target.files[0];      
     },
     createAssignment(){
-
+      console.log('this');
       if (this.$data.form.title != null ) {
         let currentObj = this;
         const config = {
@@ -160,7 +160,7 @@ export default {
         axios.post('https://ceriakan.id/api/assignment/store', formData, config)
         .then(function (response) {
           currentObj.success = response.data.success;
-          // this.$router.push({name: 'tugas-create'});          
+          
           this.$router.push({name: 'tugas-ungraded'});
         })
         .catch(function (error) {

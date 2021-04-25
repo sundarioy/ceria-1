@@ -1,22 +1,128 @@
 <template>
-	<div class="container pl-5">
-		<div class="row">
-			<ul class="list-unstyled components class-menu">
-				<li class="nav-item active">
-					<a href="#" class="nav-link">
-						<i class="fas fa-plus"></i>
-						Tambah Kelas
-					</a>
-				</li>				
-			</ul>			
-		</div>
-		<div class="row">
-			<div class="class-wrapper">
-				<div class="class-box">					
-				</div>	
-				<div class="class-name mt-3">Kelas Kelinci</div>
-			</div>
-			
-		</div>
-	</div>	
+  <div class="container">   
+    <div class="row">
+      <div class="class-header">
+        <div class="class-box-large">                   
+        </div>          
+        <div class="class-data ml-4 mt-5">
+          <div class="class-name-large mt-3">{{dataClass.kelas}}</div>  
+          <table class="mt-4">
+            <tr>
+              <td>Jumlah siswa</td>
+              <td>&emsp;: {{ subms.length }}</td>
+            </tr>
+            <tr>
+              <td>Tahun Akademik</td>
+              <td>&emsp;: {{ dataClass.thn_akademik }}</td>
+            </tr>
+            <tr>
+              <td>Wali kelas</td>
+              <td>&emsp;: {{dataTeacher.nama}} ({{teacherId}})</td>
+            </tr>
+          </table>          
+        </div>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="container ">
+        <div class="asmt-submission-table mt-4">
+          <table class="col-md-8">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>NIS</th>                
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pt-1" v-for="(subms, index) in subms" :key="subms.id">
+                <td>{{ index+1 }}</td>
+                <td>
+                  <div class="row">
+                    <div class="table-student-thumbnail border-1-555"></div>
+                    <span class="mt-2 ml-2">{{ subms.nama }}</span>
+                  </div>
+                </td>
+                <td>{{ subms.nis }}</td>                
+              </tr>         
+            </tbody>
+          </table>    
+        </div>    
+        <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form method="POST" enctype="multipart/form-data" @submit.prevent="setGrade">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Penilaian {{ namaStudent }} - {{ idStudent }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">              
+                  <div class="form-group">
+                    <label for="inputAddress">Nilai</label>
+                    <select class="custom-select" v-model="selected" v-on:change="gradeChange">
+                      <option v-bind:value="{ name: 'BSH'}" value="BSH">BSH</option>
+                      <option v-bind:value="{ name: 'MB'}" value="MB">MB</option>
+                      <option v-bind:value="{ name: 'BB'}" value="BB">BB</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAddress">Komentar Guru</label>             
+                    <textarea class="form-control" v-model="description"> </textarea>
+                  </div>  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Input Nilai</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="footer-space"></div>
+    </div>
+  </div>  
 </template>
+
+<script>
+
+export default {
+  data () {
+    return {
+      subms:[],
+      dataClass:[],
+      count:0,
+      dataTeacher:[],
+      teacherId : '',
+    }
+  }, 
+  created() {
+
+    this.username = sessionStorage.getItem('username');    
+
+    let uri = "https://ceriakan.id/api/submission/1/teacher/73100010/collected";
+    axios.get(uri).then((response) => {
+      this.subms = response.data['data'];        
+    });
+
+    let uri2 = "https://ceriakan.id/api/kelas/1";
+    axios.get(uri2).then((response) => {
+      this.dataClass = response.data['data'];
+      this.teacherId = response.data['data'].nomor_pegawai;      
+      console.log(this.teacherId);
+
+      let uri3 = "https://ceriakan.id/api/teacher/"+response.data['data'].nomor_pegawai;
+      axios.get(uri3).then((response) => {
+        this.dataTeacher = response.data['data'];
+      });      
+
+
+    });      
+  },  
+}
+
+</script>

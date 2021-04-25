@@ -2,7 +2,7 @@
 	<div class="page">
 		<div class="container col-xl-12">
 			<div class="row wrapper">
-				<div id="sidebar" class="col-xl-2">
+				<div id="sidebar"class="col-sm-2">
 					<sidebar v-if="role === 'parent'"></sidebar>	
 					<sidebar-teacher v-else-if="role === 'teacher'"></sidebar-teacher>	
 				</div>

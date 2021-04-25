@@ -28,12 +28,22 @@ import AssignmentsUnsubmitted from './components/Assignments/AssignmentsUnsubmit
 import AssignmentDetail from './components/Assignments/AssignmentDetail.vue';
 import AssignmentDetailSubmitted from './components/Assignments/AssignmentDetailSubmitted.vue';
 import ParentClasses from './components/Classes/ParentClasses.vue';
+import ParentReports from './components/Reports/ParentReports.vue';
+import ParentReportDetail from './components/Reports/ParentReportDetail.vue';
 
 // TEACHER
 import AssignmentCreation from './components/Assignments/Teacher/AssignmentCreation.vue';
 import TeacherAssignments from './components/Assignments/Teacher/TeacherAssignments.vue';
 import TeacherAssignmentsGraded from './components/Assignments/Teacher/TeacherAssignmentsGraded.vue';
 import TeacherAssignmentDetail from './components/Assignments/Teacher/TeacherAssignmentDetail.vue';
+import TeacherClasses from './components/Classes/TeacherClasses.vue';
+import TeacherClassDetail from './components/Classes/TeacherClassDetail.vue';
+import TeacherReportAddIndicator from './components/Reports/TReportAddIndicator.vue';
+import TeacherReportAddTema from './components/Reports/TReportAddTema.vue';
+import TeacherReportStudentList from './components/Reports/TReportStudentList.vue';
+import TeacherReportStudentReports from './components/Reports/TReportStudentReports.vue';
+import TeacherReportDetail from './components/Reports/TReportDetail.vue';
+import TeacherReportInsert from './components/Reports/TReportInsert.vue';
 
 //ACHIEVEMENTS
 import Achievements from './components/Achievements/Achievements.vue';
@@ -43,9 +53,19 @@ import Reminders from './components/Reminders/Reminders.vue';
 
 //BULETIN
 import Buletins from './components/Buletins/Buletins.vue';
+import BuletinCreate from './components/Buletins/BuletinCreate.vue';
+import BuletinDetail from './components/Buletins/BuletinDetail.vue';
+import BuletinsApproval from './components/Buletins/BuletinsApproval.vue';
+import BuletinDetailReview from './components/Buletins/BuletinDetailReview.vue';
+import ParentBuletins from './components/Buletins/ParentBuletins.vue';
+import Test from './components/Buletins/tes.vue';
+import All from './components/Buletins/All.vue';
+
 
 //PRESENCES
 import Presences from './components/Presences/Presences.vue';
+import TeacherPresences from './components/Presences/TeacherPresences.vue';
+import TeacherPresencesDetail from './components/Presences/TeacherPresencesDetail.vue';
 
 import App from './components/App.vue';
 import Login from './components/Login.vue';
@@ -53,7 +73,13 @@ import Login from './components/Login.vue';
 
 import VueMoment from 'vue-moment';
 import moment from 'moment-timezone';
- 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+
+import 'vuejs-datatable/dist/themes/bootstrap-4.esm';
+import { VuejsDatatableFactory } from 'vuejs-datatable';
+
 
 
 /**
@@ -69,6 +95,7 @@ import moment from 'moment-timezone';
 
 Vue.use(VueRouter,VueAxios,Axios,Datepicker,VueTimepicker,VModal);
 Vue.use(VueSweetalert2);
+Vue.use( VuejsDatatableFactory );
 Vue.component('example', require('./components/ExampleComponent.vue').default);
 Vue.component('header-dash', require('./components/HeaderDashboard.vue').default);
 Vue.component('sidebar', require('./components/SideBar.vue').default);
@@ -91,6 +118,8 @@ Vue.component('p-asmtDetail-pane', require('./components/Assignments/Parent/PAsm
 Vue.use(VueMoment, {
     moment,
 });
+
+Vue.component('datatable-component', require('./components/Buletins/Datatables.vue').default);
 
 
 /**
@@ -152,6 +181,16 @@ Vue.use(VueMoment, {
   component: ParentClasses
 }, 
 {
+  name: 'daftar-kelas',
+  path: '/daftar-kelas',
+  component: TeacherClasses
+}, 
+{
+  name: 'detail-kelas',
+  path: '/detail-kelas/:id',
+  component: TeacherClassDetail
+}, 
+{
   name: 'prestasi',
   path: '/prestasi',
   component: Achievements
@@ -170,7 +209,87 @@ Vue.use(VueMoment, {
   name: 'kehadiran',
   path: '/kehadiran',
   component: Presences
-}
+},
+{
+  name: 'daftar-kehadiran',
+  path: '/daftar-kehadiran',
+  component: TeacherPresences
+},
+{
+  name: 'detail-kehadiran',
+  path: '/detail-kehadiran/:id',
+  component: TeacherPresencesDetail
+},
+{
+  name: 'tambah-indikator',
+  path: '/tambah-indikator/',
+  component: TeacherReportAddIndicator
+},,
+{
+  name: 'tambah-tema',
+  path: '/tambah-tema/',
+  component: TeacherReportAddTema
+},
+{
+  name: 'daftar-rapor',
+  path: '/daftar-rapor/',
+  component: TeacherReportStudentList
+},
+{
+  name: 'daftar-rapor-siswa',
+  path: '/daftar-rapor-siswa/:id',
+  component: TeacherReportStudentReports
+},
+{
+  name: 'detail-rapor',
+  path: '/detail-rapor/:id/:date',
+  component: TeacherReportDetail
+},
+{
+  name: 'tambah-rapor',
+  path: '/tambah-rapor/:id/:date',
+  component: TeacherReportInsert
+},
+{
+  name: 'rapor',
+  path: '/rapor/',
+  component: ParentReports
+},
+{
+  name: 'rapor-detail',
+  path: '/rapor-detail/:id',
+  component: ParentReportDetail
+},
+{
+  name: 'tambah-buletin',
+  path: '/tambah-buletin',
+  component: BuletinCreate
+},
+{
+  name: 'buletin-detail',
+  path: '/buletin-detail/:id',
+  component: BuletinDetail
+},
+{
+  name: 'buletin-approval',
+  path: '/buletin-approval',
+  component: BuletinsApproval
+},
+{
+  name: 'buletin-review',
+  path: '/buletin-review/:id',
+  component: BuletinDetailReview
+},
+{
+  name: 'daftar-buletin',
+  path: '/daftar-buletin',
+  component: ParentBuletins
+},
+{
+  name: 'all',
+  path: '/all',
+  component: All
+},
 ];
 
 const router = new VueRouter({ 

@@ -5,9 +5,9 @@
 				<h4>{{ asmts.title }}</h4>
 				<i>Tugas ditambahkan pada {{ asmts.date_created | moment("DD MMMM YYYY") }} pukul {{ asmts.date_created | moment("HH:mm") }} WIB</i>                  
 				<div class="amt-main-desc mt-4">
-					<p>{{ asmts.description }}</p>
+					<p>{{ asmts.description }}</p>          
 				</div>
-				<div class="amt-main-file" v-if="asmts.teacher_file != 0">					
+				<div class="amt-main-file" v-if="asmts.teacher_file.length">
           <a v-bind:href="'https://ceriakan.id/'+ asmts.teacher_file[0].location +'/'+ asmts.teacher_file[0].title">
 						<i class="fas fa-browser"></i>{{asmts.teacher_file[0].title}}
 					</a>

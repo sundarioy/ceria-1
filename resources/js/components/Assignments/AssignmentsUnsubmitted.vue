@@ -67,12 +67,7 @@ export default {
     axios.get(uri2).then(response => {
       this.student = response.data['data'];  
     });
-
-    // var json = JSON.parse(this.student);
-
-    // alert(json.data.id_kelas); //88 8nd Street
-    // alert(json["data"].nama); //New York
-
+ 
     let uri = 'https://ceriakan.id/api/nis/'+this.username+'/kelas/'+this.student['id_kelas']+'/assignment';
     //let uri = 'https://ceriakan.id/api/nis/username/kelas/1/assignment';
     axios.get(uri).then(response => {

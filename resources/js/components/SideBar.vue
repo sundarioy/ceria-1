@@ -42,17 +42,25 @@
 						</a>
 					</router-link>
 				</li>
-				<li class="nav-item" v-bind:class = "(route == 'prestasi')?'active':''">
+				<!-- <li class="nav-item" v-bind:class = "(route == 'prestasi')?'active':''">
 					<router-link :to="{ name: 'prestasi' }">
 						<a href="#" class="nav-link" v-bind:class = "(route == 'prestasi')?'active':''" v-on:click="setRoute('prestasi',$event)">
 							<i class="fas fa-file-certificate"></i>
 							Prestasi
 						</a>
 					</router-link>
+				</li> -->
+				<li class="nav-item" v-bind:class = "(route == 'rapor')?'active':''">
+					<router-link :to="{ name: 'rapor' }">
+						<a href="#" class="nav-link" v-bind:class = "(route == 'rapor')?'active':''" v-on:click="setRoute('rapor',$event)">
+							<i class="fas fa-file-certificate"></i>
+							Rapor
+						</a>
+					</router-link>
 				</li>
-				<li class="nav-item" v-bind:class = "(route == 'buletin')?'active':''">
-					<router-link :to="{ name: 'buletin' }">
-						<a href="#" class="nav-link" v-bind:class = "(route == 'buletin')?'active':''" v-on:click="setRoute('buletin',$event)">
+				<li class="nav-item" v-bind:class = "(route == 'daftar-buletin')?'active':''">
+					<router-link :to="{ name: 'daftar-buletin' }">
+						<a href="#" class="nav-link" v-bind:class = "(route == 'daftar-buletin')?'active':''" v-on:click="setRoute('daftar-buletin',$event)">
 							<i class="fas fa-browser"></i>
 							Buletin
 						</a>

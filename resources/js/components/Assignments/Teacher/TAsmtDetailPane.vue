@@ -12,7 +12,7 @@
         </li>
         <li class="nav-item">
           <router-link to="">
-            <a href="" class="nav-link" v-on:click="deleteAsmt()">
+            <a href="" class="nav-link" v-on:click="deleteAsmt">
               <i class="fas fa-trash"></i>
               Hapus
             </a>
@@ -36,8 +36,8 @@
         <div class="amt-main-desc pt-3">
           {{ asmts.description }}
         </div>
-        <div class="amt-main-file mt-4" v-if="asmts.teacher_file != 0">
-          <a v-bind:href="'https://ceriakan.id/'+ asmts.teacher_file[0].location +'/'+ asmts.teacher_file[0].title">
+        <div class="amt-main-file mt-4" v-if="asmts.teacher_file[0] != null">
+          <a v-bind:href="'https://ceriakan.id/storage/app/'+ asmts.teacher_file[0].location">            
             <i class="fas fa-browser"></i>{{asmts.teacher_file[0].title}}
           </a>
         </div>
@@ -82,9 +82,8 @@ export default {
             icon: 'success',
             timer: 1000
           });
-          let uri = 'https://ceriakan.id./assignment/'+this.$route.params.id+'/delete';
-          this.axios.delete(uri).then(response => {
-            this.asmts.splice(this.asmts.indexOf(id), 1);
+          let uri = 'https://ceriakan.id./assignment/'+this.$route.params.id+'/delete';          
+          this.axios.delete(uri).then(response => {            
           });
           console.log("Deleted assignment with id ..." +id);
         }

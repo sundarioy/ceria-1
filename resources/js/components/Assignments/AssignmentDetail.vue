@@ -5,7 +5,7 @@
         <span class="path">Tugas</span>
       </router-link>
       >
-      <span class="path">Penjumlahan Bilangan</span>
+      <span class="path">{{ asmts.title }}</span>
       <hr>
     </header>
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -34,3 +34,22 @@
       </content>
     </div>
   </template>
+
+  <script>
+  
+  export default {
+
+    data(){
+      return {
+        asmts:[],
+      }
+    },
+    created() {
+      let uri = "https://ceriakan.id/api/nis/"+this.username+"/kelas/"+this.$route.params.class+"/assignment/"+this.$route.params.id;
+      axios.get(uri).then((response) => {
+        this.asmts = response.data['data'];  
+      });
+    }
+  }  
+
+  </script>
